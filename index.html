@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Dice Tower Board Game Cafe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;700;800&family=Work+Sans:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="wrap bar">
+            <a class="logo" href="#top" aria-label="Dice Tower Board Game Cafe, home">
+                <svg viewBox="0 0 32 32" aria-hidden="true">
+                    <polygon points="16,2 29,10 29,22 16,30 3,22 3,10" fill="#c8643c" />
+                    <polygon points="16,9 22,19 10,19" fill="#f6ecd9" />
+                </svg>Dice Tower
+            </a>
+            <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"
+                aria-controls="nav"><span></span></button>
+            <nav id="nav" aria-label="Main">
+                <ul>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#events">Events</a></li>
+                    <li><a href="#visit">Find us</a></li>
+                    <li><a href="#reserve">Reserve</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="top">
+        <section class="hero">
+            <div class="wrap">
+                <div>
+                    <div class="badge" id="status"><span class="dot"></span><span id="statusText">Open daily 11:00 AM to
+                            8:00 PM</span></div>
+                    <h1>Draft, brew, repeat.</h1>
+                    <p class="lead">Dice Tower is the corner of Golden Country Homes where the table is always set.
+                        Bring your deck, your D&amp;D party, or your reviewer notes, and settle in with a proper cup of
+                        coffee.</p>
+                    <div class="btns">
+                        <a class="btn" href="#menu">View Menu</a>
+                        <a class="btn ghost" href="#visit">Find Us</a>
+                        <a class="btn ghost" href="#reserve">Reserve a Table</a>
+                    </div>
+                </div>
+                <div class="fan" aria-hidden="true">
+                    <div class="pc a"><b>Barako Brew <span>2</span></b>
+                        <div class="art"><svg viewBox="0 0 64 64">
+                                <path d="M12 24h34v14a14 14 0 0 1-14 14h-6a14 14 0 0 1-14-14zM46 28h4a6 6 0 0 1 0 12h-4"
+                                    fill="none" stroke="#f6ecd9" stroke-width="4" />
+                            </svg></div><small>Instant. Draw two cards worth of focus.</small>
+                    </div>
+                    <div class="pc b"><b>Study Hall <span>1</span></b>
+                        <div class="art"><svg viewBox="0 0 64 64">
+                                <rect x="10" y="14" width="44" height="36" rx="4" fill="none" stroke="#f6ecd9"
+                                    stroke-width="4" />
+                                <path d="M32 14v36" stroke="#f6ecd9" stroke-width="4" />
+                            </svg></div><small>Enchantment. Your reviewer gets +2 toughness.</small>
+                    </div>
+                    <div class="pc c"><b>Dice Tower <span>11 to 8</span></b>
+                        <div class="art"><svg viewBox="0 0 64 64">
+                                <polygon points="32,4 58,19 58,45 32,60 6,45 6,19" fill="#2a1b14" opacity=".85" />
+                                <polygon points="32,18 44,40 20,40" fill="#f6ecd9" /><text x="32" y="38" font-size="12"
+                                    font-weight="800" text-anchor="middle" fill="#2a1b14">20</text>
+                            </svg></div><small>Land. Tap for a seat at the table.</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="menu" class="alt">
+            <div class="wrap">
+                <h2>The menu</h2>
+                <p class="lead">Every drink is priced like a mana cost. Cheap and easy to cast, so you can keep your
+                    wallet for booster packs.</p>
+                <div class="tabs" role="tablist" id="tabs" aria-label="Menu categories"></div>
+                <label class="sr" for="q" style="position:absolute;left:-9999px">Search the menu</label>
+                <input class="search" id="q" type="search" placeholder="Search drinks and food, like matcha or egg">
+                <div class="grid" id="menuGrid" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="wrap two">
+                <div>
+                    <h2>Good beans, long sessions</h2>
+                    <p>We started Dice Tower for the people who used to take over a corner of the nearest milk tea shop
+                        for six hours. Players, students, and dungeon masters deserve a place that is happy to see them
+                        stay.</p>
+                    <p>Our coffee leans on Batangas barako and single-origin beans from Philippine highland farms,
+                        roasted in small batches and pulled by baristas who also know what a mulligan is.</p>
+                    <p>Inside, it feels like your favorite game store: shelves of board games to borrow, playmat-sized
+                        tables, warm lamps, and a wall of binders for trading.</p>
+                </div>
+                <div class="facts">
+                    <div class="fact">
+                        <h3>Sourced close to home</h3>
+                        <p>Barako from Batangas and highland beans from Benguet and Sagada.</p>
+                    </div>
+                    <div class="fact">
+                        <h3>Tables built for cards</h3>
+                        <p>Wide, felt-topped tables with room for a playmat, a deck box, and a drink.</p>
+                    </div>
+                    <div class="fact">
+                        <h3>A shelf of games to borrow</h3>
+                        <p>Board games and demo decks for newcomers. Ask the staff to teach you one.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="events" class="alt">
+            <div class="wrap">
+                <h2>This week at the tower</h2>
+                <p class="lead">Recurring events. Schedules are placeholders until we confirm them.</p>
+                <div class="chips" id="chips" role="group" aria-label="Filter events"></div>
+                <div class="grid" id="evGrid"></div>
+            </div>
+        </section>
+
+        <section id="visit">
+            <div class="wrap two">
+                <div class="map">
+                    <iframe title="Map showing the location of Dice Tower Board Game Cafe"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4873.875512705374!2d121.07390180000002!3d13.7859624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd0fa6397ee605%3A0xbcc55e338edc14ad!2sDice%20Tower%20Board%20Game%20Cafe!5e1!3m2!1sen!2sph!4v1791717086994!5m2!1sen!2sph"
+                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                </div>
+                <div>
+                    <h2>Find us</h2>
+                    <p id="addr"><strong>Dice Tower Board Game Cafe</strong><br>Golden Country Homes, Alanginan</p>
+                    <div class="btns" style="margin-top:0">
+                        <a class="btn" id="dir" target="_blank" rel="noopener"
+                            href="https://www.google.com/maps/search/?api=1&query=13.7859624,121.0739018">Get
+                            directions</a>
+                        <button class="btn ghost" id="copy" type="button">Copy address</button><span class="toast"
+                            id="toast" role="status">Copied</span>
+                    </div>
+                    <ul class="rows" id="hours"></ul>
+                    <p style="color:var(--muted);font-size:.95rem"><strong style="color:var(--ink)">Parking:</strong>
+                        Street parking is available along the subdivision road. Please keep gates and driveways clear.
+                        Motorcycle and bike spots near the entrance.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="reserve" class="alt">
+            <div class="wrap" style="max-width:820px">
+                <h2>Reserve a table</h2>
+                <p class="lead">Hosting a draft, a campaign, or a group study session? Tell us when and how many.</p>
+                <form id="form" novalidate>
+                    <div class="f"><label for="name">Name</label><input id="name" name="name" autocomplete="name"
+                            required><span class="err"></span></div>
+                    <div class="f"><label for="contact">Email or mobile number</label><input id="contact" name="contact"
+                            required><span class="err"></span></div>
+                    <div class="f"><label for="kind">I'm reaching out about</label><select id="kind">
+                            <option>Table reservation</option>
+                            <option>Event or tournament inquiry</option>
+                            <option>Feedback</option>
+                        </select><span class="err"></span></div>
+                    <div class="f"><label for="guests">Number of guests</label><input id="guests" type="number" min="1"
+                            max="12" value="4"><span class="err"></span></div>
+                    <div class="f"><label for="date">Date</label><input id="date" type="date" required><span
+                            class="err"></span></div>
+                    <div class="f"><label for="time">Arrival time</label><input id="time" type="time" min="11:00"
+                            max="19:30" required><span class="err"></span></div>
+                    <div class="f full"><label for="msg">Notes (game, format, special requests)</label><textarea
+                            id="msg" maxlength="400"></textarea><span class="err"></span></div>
+                    <div class="f full"><button class="btn" type="submit">Send request</button></div>
+                </form>
+                <div class="done" id="done" role="status"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="wrap"><span>Dice Tower Board Game Cafe, Golden Country Homes, Alanginan</span><span>Open daily 11:00
+                AM to 8:00 PM</span></div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

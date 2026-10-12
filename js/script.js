@@ -293,7 +293,10 @@ function initForm() {
       status.textContent = "Request sent. We will confirm your table by email or phone.";
     } catch (err) {
       console.warn("Reservation failed:", err);
-      status.textContent = "Sorry, the request did not go through. Please try again, or message us directly.";
+      const hint = location.protocol === "file:"
+        ? " Open the site from your web host instead of the file on your computer, then try again."
+        : "";
+      status.textContent = "Sorry, the request did not go through." + hint + " Please try again, or message us directly.";
     } finally {
       button.disabled = false;
     }

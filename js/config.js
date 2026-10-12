@@ -12,7 +12,7 @@ const SITE_CONFIG = {
 
   // Reservation requests are sent to this email through FormSubmit (formsubmit.co).
   // The first request triggers an activation email from FormSubmit: click the link in it once.
-  RESERVATION_EMAIL: "hello@example.com",
+  RESERVATION_EMAIL: "cantosherbie@gmail.com",
 
   // Opening hours in 24-hour time (Philippine time). 11 to 20 = 11:00 AM to 8:00 PM.
   OPEN_HOUR: 11,

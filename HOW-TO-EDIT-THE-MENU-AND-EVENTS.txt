@@ -1,0 +1,39 @@
+HOW THE OWNER EDITS THE MENU AND EVENTS
+=======================================
+Open the Google Sheet. It has two tabs. Keep the headings in row 1 exactly as they are.
+
+MENU tab:   Category | Name | Price | Description | Available
+  - Edit any cell, or add a new row for a new item.
+  - Type No in Available to show an item as "Sold out". Type Yes to bring it back.
+  - Keep items of the same Category next to each other.
+
+EVENTS tab: Date | Time | Title | Description | Show
+  - One-time event: write the date as 2026-10-25 (year-month-day).
+    It disappears from the website by itself after that day.
+  - Weekly event: write text instead, like "Every Friday".
+  - Type No in Show to hide an event without deleting it.
+
+Changes appear on the website in about 5 minutes. Nobody needs to touch the website files.
+
+
+ONE-TIME SETUP (web developer)
+==============================
+1. Go to sheets.new. Import data/menu.csv into the first tab (File > Import > Upload)
+   and name the tab Menu. Add a second tab named Events and import data/events.csv.
+2. File > Share > Publish to web.
+3. Pick the Menu tab, change "Web page" to "Comma-separated values (.csv)", click Publish.
+   Copy the link.
+4. Repeat step 3 for the Events tab. This gives a second link.
+5. Open js/config.js and paste the links:
+      MENU_CSV_URL:   "link for the Menu tab",
+      EVENTS_CSV_URL: "link for the Events tab",
+   Also set RESERVATION_EMAIL to the cafe's real email address.
+
+FOLDERS
+=======
+index.html       the page
+css/styles.css   colors (taken from the logo) and layout
+js/config.js     Google Sheet links, email, opening hours
+js/script.js     menu, events, form and navigation code
+images/          logo, wordmark and favicon
+data/            sample menu.csv and events.csv to import into Google Sheets

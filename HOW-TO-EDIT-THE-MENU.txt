@@ -1,0 +1,19 @@
+HOW THE OWNER EDITS THE MENU
+============================
+1. Open the Google Sheet. Keep these column headings in row 1 exactly:
+      Category | Name | Price | Description | Available
+2. Edit any cell. To add an item, add a new row. To hide an item temporarily,
+   type No in the Available column (it shows as "Sold out").
+   Items in the same Category should sit next to each other.
+3. Changes appear on the website in about 5 minutes. No need to touch the site files.
+
+ONE-TIME SETUP (done by the web developer)
+==========================================
+1. Go to sheets.new and import menu.csv (File > Import > Upload).
+2. File > Share > Publish to web.
+3. Choose the menu sheet tab, change "Web page" to "Comma-separated values (.csv)", click Publish.
+4. Copy the link and paste it between the quotes in script.js:
+      const MENU_CSV_URL = "PASTE LINK HERE";
+5. Optional: import events.csv into a second tab, publish that tab as CSV too,
+   and paste that link into EVENTS_CSV_URL.
+6. Set RESERVATION_EMAIL in script.js to the cafe's real email address.

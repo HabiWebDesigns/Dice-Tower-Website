@@ -62,7 +62,9 @@ function parseCSV(text) {
 async function loadRows(url, sample) {
   if (url) {
     try {
-      const res = await fetch(url, { cache: "no-store" });
+      // The extra parameter makes the browser ask for a fresh copy every time.
+      const freshUrl = url + (url.includes("?") ? "&" : "?") + "_=" + Date.now();
+      const res = await fetch(freshUrl, { cache: "no-store" });
       if (!res.ok) throw new Error("HTTP " + res.status);
       return { rows: parseCSV(await res.text()), live: true };
     } catch (err) {
@@ -248,7 +250,7 @@ function initForm() {
     return ok;
   }
 
-  form.addEventListener("submit", e => {
+  form.addEventListener("submit", async e => {
     e.preventDefault();
     status.className = "form-status";
     if (!validate()) {
@@ -258,20 +260,43 @@ function initForm() {
       return;
     }
     const f = form.elements;
-    const body = [
-      "Name: " + f.name.value.trim(),
-      "Email: " + f.email.value.trim(),
-      "Mobile: " + (f.phone.value.trim() || "n/a"),
-      "Players: " + f.guests.value,
-      "Date: " + f.date.value,
-      "Time: " + f.time.value,
-      "Notes: " + (f.notes.value.trim() || "n/a")
-    ].join("\n");
-    window.location.href = "mailto:" + SITE_CONFIG.RESERVATION_EMAIL +
-      "?subject=" + encodeURIComponent("Table reservation: " + f.name.value.trim()) +
-      "&body=" + encodeURIComponent(body);
-    status.classList.add("ok");
-    status.textContent = "Your email app should open with the request filled in. Press send to finish.";
+    if (f._honey && f._honey.value) return; // hidden spam trap: real visitors leave it empty
+
+    const button = form.querySelector('button[type="submit"]');
+    button.disabled = true;
+    status.textContent = "Sending your request...";
+
+    const payload = {
+      name: f.name.value.trim(),
+      email: f.email.value.trim(),
+      mobile: f.phone.value.trim() || "n/a",
+      players: f.guests.value,
+      date: f.date.value,
+      time: f.time.value,
+      notes: f.notes.value.trim() || "n/a",
+      _subject: "Table reservation: " + f.name.value.trim(),
+      _template: "table",
+      _captcha: "false"
+    };
+
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/" + encodeURIComponent(SITE_CONFIG.RESERVATION_EMAIL), {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (!res.ok || String(data.success) !== "true") throw new Error(data.message || "Request failed");
+      form.reset();
+      dateInput.min = manilaToday();
+      status.classList.add("ok");
+      status.textContent = "Request sent. We will confirm your table by email or phone.";
+    } catch (err) {
+      console.warn("Reservation failed:", err);
+      status.textContent = "Sorry, the request did not go through. Please try again, or message us directly.";
+    } finally {
+      button.disabled = false;
+    }
   });
 
   form.addEventListener("input", e => {

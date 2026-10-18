@@ -1,15 +1,8 @@
 /* ===== Dice Tower: js/dice.js =====
-   The clickable d20 on the main page. Tap the die to roll a number from 1 to 20. */
+   Shared roll behavior for the D20 section and the floating D20 widget. */
 (function () {
-  const btn = document.getElementById("d20Btn");
-  if (!btn) return;
-  const numEl = document.getElementById("d20Num");
-  const result = document.getElementById("d20Result");
-  const history = document.getElementById("d20History");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const ROLL_MS = reduceMotion ? 500 : 1300;   // how long the die "tumbles"
-  const rolls = [];
-  let rolling = false;
 
   /* A fair 1 to 20 roll (no modulo bias). */
   function d20() {
@@ -41,32 +34,59 @@
     return "Rough roll. Reroll, the dice owe you.";
   }
 
-  function roll() {
-    if (rolling) return;
-    rolling = true;
-    btn.disabled = true;
-    btn.classList.remove("crit", "fail");
-    btn.classList.add("rolling");
-    result.textContent = "Rolling...";
-    // Flicker random numbers while the die tumbles.
-    const flicker = setInterval(() => { numEl.textContent = d20(); }, 70);
-    setTimeout(() => {
-      clearInterval(flicker);
-      const n = resultRoll();
-      numEl.textContent = n;
-      result.textContent = "You rolled a " + n + ". " + message(n);
-      btn.classList.remove("rolling");
-      if (n === 20) btn.classList.add("crit");
-      if (n === 1) btn.classList.add("fail");
-      rolls.unshift(n);
-      if (rolls.length > 6) rolls.pop();
-      history.innerHTML = "";
-      rolls.forEach(r => { const li = document.createElement("li"); li.textContent = r; history.appendChild(li); });
-      btn.disabled = false;
-      rolling = false;
-      btn.focus();
-    }, ROLL_MS);
+  function bindRoller(btn, numEl, result, history, bubble, closeBubble) {
+    if (!btn) return;
+    let rolling = false;
+    const rolls = [];
+
+    if (closeBubble && bubble) {
+      closeBubble.addEventListener("click", () => { bubble.hidden = true; });
+    }
+
+    btn.addEventListener("click", () => {
+      if (rolling) return;
+      rolling = true;
+      if (bubble) bubble.hidden = false;
+      btn.disabled = true;
+      btn.classList.remove("crit", "fail");
+      btn.classList.add("rolling");
+      result.textContent = "Rolling...";
+      const flicker = setInterval(() => { numEl.textContent = d20(); }, 70);
+      setTimeout(() => {
+        clearInterval(flicker);
+        const n = resultRoll();
+        numEl.textContent = n;
+        result.textContent = "You rolled a " + n + "! " + message(n);
+        btn.classList.remove("rolling");
+        if (n === 20) btn.classList.add("crit");
+        if (n === 1) btn.classList.add("fail");
+        if (history) {
+          rolls.unshift(n);
+          if (rolls.length > 6) rolls.pop();
+          history.innerHTML = "";
+          rolls.forEach(r => { const li = document.createElement("li"); li.textContent = r; history.appendChild(li); });
+        }
+        btn.disabled = false;
+        rolling = false;
+        btn.focus();
+      }, ROLL_MS);
+    });
   }
 
-  btn.addEventListener("click", roll);
+  bindRoller(
+    document.getElementById("d20Btn"),
+    document.getElementById("d20Num"),
+    document.getElementById("d20Result"),
+    document.getElementById("d20History"),
+    null,
+    null
+  );
+  bindRoller(
+    document.getElementById("d20WidgetBtn"),
+    document.getElementById("d20WidgetNum"),
+    document.getElementById("d20WidgetText"),
+    null,
+    document.getElementById("d20WidgetBubble"),
+    document.getElementById("d20WidgetClose")
+  );
 })();

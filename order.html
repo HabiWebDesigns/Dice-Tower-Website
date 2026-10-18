@@ -11,8 +11,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;700&family=Metamorphous&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/order.css">
+  <link rel="stylesheet" href="css/dice.css?v=3">
 </head>
-<body>
+<body class="order-body">
 
 <a class="skip" href="#menuList">Skip to the food list</a>
 
@@ -140,11 +141,27 @@
   </div>
 </div>
 
+<aside class="d20-widget" aria-label="D20 dice roller">
+  <div class="d20-widget-bubble" id="d20WidgetBubble">
+    <p class="d20-widget-text" id="d20WidgetText" aria-live="polite">Tap for a roll!</p>
+    <button class="d20-widget-close" id="d20WidgetClose" type="button" aria-label="Close D20 speech bubble">&times;</button>
+  </div>
+  <button class="d20-widget-btn" id="d20WidgetBtn" type="button" aria-label="Roll the D20">
+    <svg class="d20-svg" id="d20WidgetSvg" viewBox="0 0 200 200" aria-hidden="true">
+      <polygon class="d20-body" points="100,8 180,54 180,146 100,192 20,146 20,54"/>
+      <polygon class="d20-face" points="100,36 152,134 48,134"/>
+      <path class="d20-edge" d="M100 8V36M20 54L100 36L180 54M48 134L20 54M48 134L20 146M48 134L100 192M152 134L180 54M152 134L180 146M152 134L100 192M48 134H152"/>
+      <text class="d20-num" id="d20WidgetNum" x="100" y="100">20</text>
+    </svg>
+  </button>
+</aside>
+
 <footer class="site-footer">
   <p><strong>Dice Tower Board Game Cafe</strong>, Golden Country Homes, Alanginan. Open Monday to Saturday 11:00 AM to 8:00 PM.</p>
 </footer>
 
 <script src="js/config.js?v=3"></script>
 <script src="js/order.js?v=3"></script>
+<script src="js/dice.js?v=3"></script>
 </body>
 </html>

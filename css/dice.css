@@ -1,0 +1,31 @@
+/* ===== Dice Tower: css/dice.css =====
+   The "Roll the d20" section on the main page. Colors come from css/styles.css. */
+.dice { background: var(--tower); color: var(--parchment); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 5vw, 4rem); align-items: center; }
+.dice h2 { color: #fff; }
+.d20-stage { display: grid; justify-items: center; gap: .8rem; }
+.d20-btn { background: none; border: 0; padding: 0; cursor: pointer; width: min(280px, 72vw); border-radius: 50%; -webkit-tap-highlight-color: transparent; }
+.d20-btn:hover .d20-svg { filter: drop-shadow(0 0 14px rgba(240, 132, 44, .55)); }
+.d20-btn:disabled { cursor: progress; }
+.d20-svg { width: 100%; height: auto; display: block; transform-origin: 50% 52%; transition: filter .2s; }
+.d20-body { fill: var(--dragon); stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
+.d20-face { fill: var(--flame); stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; }
+.d20-edge { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; }
+.d20-num { font-family: var(--font-display); font-size: 46px; fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
+.rolling .d20-svg { animation: d20-tumble 1.3s cubic-bezier(.25, .7, .35, 1); }
+@keyframes d20-tumble {
+  0%   { transform: translateY(0) rotate(0) scale(1); }
+  18%  { transform: translateY(-46px) rotate(260deg) scale(1.1); }
+  38%  { transform: translateY(0) rotate(520deg) scale(.96); }
+  52%  { transform: translateY(-22px) rotate(690deg) scale(1.04); }
+  68%  { transform: translateY(0) rotate(820deg) scale(.98); }
+  82%  { transform: translateY(-8px) rotate(960deg) scale(1.01); }
+  100% { transform: translateY(0) rotate(1080deg) scale(1); }
+}
+.d20-btn.crit .d20-body { fill: var(--flame); }
+.d20-btn.crit .d20-svg { filter: drop-shadow(0 0 22px rgba(240, 132, 44, .9)); }
+.d20-btn.fail .d20-body { fill: var(--steel); }
+.d20-result { margin: 0; min-height: 3.2em; text-align: center; font-weight: 700; font-size: 1.1rem; }
+.d20-history { margin: 0; padding: 0; list-style: none; display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center; font-size: .95rem; color: var(--blush); }
+.d20-history li { background: var(--tower-soft); border-radius: 999px; padding: .1rem .7rem; }
+@media (max-width: 820px) { .dice { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .rolling .d20-svg { animation: none; } }

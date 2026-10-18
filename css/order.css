@@ -91,7 +91,27 @@
 .field textarea { resize: vertical; }
 .pay-note { font-size: .93rem; margin: 0 0 .8rem; color: #5b4238; }
 .pay-note:empty { display: none; }
+.field input[type="file"] { padding: .5rem; background: #fff; }
+.hint { margin: .3rem 0 0; font-size: .88rem; color: #5b4238; }
+.proof-preview { display: flex; align-items: center; gap: .7rem; margin-top: .6rem; padding: .5rem; background: #fff; border: 2px solid var(--line); border-radius: var(--radius); }
+.proof-preview[hidden] { display: none; }
+.proof-preview img { width: 56px; height: 56px; object-fit: cover; border-radius: 6px; flex: none; }
+.proof-preview img[hidden] { display: none; }
+.proof-preview span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .92rem; }
+.proof-remove { font: inherit; font-weight: 700; font-size: .9rem; background: none; border: 2px solid var(--ink); color: var(--ink); border-radius: var(--radius); padding: .25rem .7rem; cursor: pointer; }
+.proof-remove:hover { background: var(--ink); color: var(--paper); }
+.field.invalid input[type="file"] { border-color: #b3261e; }
+.pay-box { background: #fff; border: 2px solid var(--line); border-radius: var(--radius); padding: 1rem; margin: 1.1rem 0 .9rem; }
+.pay-box h3 { margin: 0 0 .4rem; }
+.pay-amount { margin: 0 0 .6rem; font-size: 1.1rem; }
+.pay-amount strong { color: var(--maroon); font-size: 1.3rem; }
+.qr { display: block; width: min(100%, 300px); height: auto; margin: 0 auto .4rem; }
+.qr-save { display: block; text-align: center; font-weight: 700; color: var(--dragon); margin-bottom: .8rem; }
+.pay-steps { margin: 0 0 .6rem; padding-left: 1.2rem; font-size: .93rem; color: #5b4238; }
+.pay-steps li { margin-bottom: .3rem; }
+.send-hint { margin: 0 0 .8rem; padding: .7rem .9rem; background: #fff; border: 2px dashed var(--blush); border-radius: var(--radius); font-size: .93rem; color: #5b4238; }
 #sendBtn { width: 100%; }
+#sendBtn[hidden], .send-hint[hidden] { display: none; }
 #sendBtn:disabled { opacity: .6; cursor: wait; }
 
 /* ----- Header cart button and mobile bar (small screens only) ----- */

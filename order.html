@@ -95,9 +95,32 @@
             <label for="notes">Notes <span class="optional">(optional)</span></label>
             <textarea id="notes" name="notes" rows="3" maxlength="300" placeholder="Less sugar, no onions, allergies..."></textarea>
           </div>
-          <p class="pay-note" id="payNote"></p>
+          <div class="pay-box">
+            <h3>Pay with InstaPay</h3>
+            <p class="pay-amount">Amount to pay: <strong id="payAmount">&#8369;0</strong></p>
+            <img class="qr" src="images/instapay-qr.png" alt="InstaPay QR code for Dice Tower Board Game Cafe" width="780" height="807">
+            <a class="qr-save" href="images/instapay-qr.png" download="dice-tower-instapay-qr.png">Save the QR image</a>
+            <ol class="pay-steps">
+              <li>Scan the QR with your bank or e-wallet app. On your phone, save the QR image and upload it in your app instead.</li>
+              <li>Pay the exact amount shown above.</li>
+              <li>Take a screenshot of your payment receipt and upload it below.</li>
+            </ol>
+            <p class="pay-note" id="payNote"></p>
+          </div>
+          <div class="field" id="proofField">
+            <label for="proof">Proof of payment <span class="optional">(required)</span></label>
+            <input id="proof" name="proof" type="file" accept="image/*,application/pdf" required>
+            <p class="hint">A screenshot of your payment receipt. JPG, PNG, or PDF.</p>
+            <div class="proof-preview" id="proofPreview" hidden>
+              <img id="proofThumb" alt="" hidden>
+              <span id="proofName"></span>
+              <button type="button" class="proof-remove" id="proofRemove">Remove</button>
+            </div>
+            <p class="error" id="proofError"></p>
+          </div>
           <p class="pay-note" id="closedNote"></p>
-          <button class="btn btn-primary" type="submit" id="sendBtn">Send order</button>
+          <p class="send-hint" id="sendHint">The Send order button appears after you upload your proof of payment.</p>
+          <button class="btn btn-primary" type="submit" id="sendBtn" hidden disabled>Send order</button>
           <p id="formStatus" class="form-status" aria-live="polite"></p>
         </form>
       </div>

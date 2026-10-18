@@ -25,8 +25,13 @@ const SITE_CONFIG = {
   // for example images/menu/spanish-latte.jpg
   ORDER_PHOTO_BY_NAME: true,
 
-  // Shown above the Send order button. Change it to match your cafe's policy, or use "" to hide it.
-  ORDER_PAYMENT_NOTE: "Payment is made at the cafe.",
+  // Payment: customers scan images/instapay-qr.png (replace that file to change the QR) and must upload
+  // a screenshot of their receipt before the Send order button appears. The website does not check the payment.
+  // Largest proof file accepted, in MB (photos are shrunk automatically first). FormSubmit allows about 10 MB in total.
+  ORDER_PROOF_MAX_MB: 5,
+
+  // Optional extra line shown under the QR code, for example the account name. Use "" to hide it.
+  ORDER_PAYMENT_NOTE: "",
 
   // Opening hours in 24-hour time (Philippine time). 11 to 20 = 11:00 AM to 8:00 PM.
   OPEN_HOUR: 11,

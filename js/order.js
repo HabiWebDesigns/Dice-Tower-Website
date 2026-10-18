@@ -7,10 +7,11 @@ const ORDER = {
   email: SITE_CONFIG.ORDER_EMAIL || SITE_CONFIG.RESERVATION_EMAIL,
   imageFolder: SITE_CONFIG.ORDER_IMAGE_FOLDER || "images/menu/",
   photoByName: SITE_CONFIG.ORDER_PHOTO_BY_NAME !== false,
-  payNote: SITE_CONFIG.ORDER_PAYMENT_NOTE === undefined ? "Payment is made at the cafe." : SITE_CONFIG.ORDER_PAYMENT_NOTE,
+  payNote: SITE_CONFIG.ORDER_PAYMENT_NOTE || "",
   openLabel: ((SITE_CONFIG.OPEN_HOUR + 11) % 12 + 1) + ":00 " + (SITE_CONFIG.OPEN_HOUR < 12 ? "AM" : "PM"),
   firstTime: String(SITE_CONFIG.OPEN_HOUR).padStart(2, "0") + ":00",
-  lastTime: String(SITE_CONFIG.CLOSE_HOUR - 1).padStart(2, "0") + ":30"
+  lastTime: String(SITE_CONFIG.CLOSE_HOUR - 1).padStart(2, "0") + ":30",
+  proofMaxBytes: (SITE_CONFIG.ORDER_PROOF_MAX_MB || 5) * 1024 * 1024
 };
 
 /* Same sample menu as the main site, used if the sheet cannot be loaded. */
@@ -280,6 +281,7 @@ function renderCart() {
   const { count, total } = totals();
   document.getElementById("cartEmpty").hidden = count > 0;
   document.getElementById("cartTotal").textContent = money(total);
+  document.getElementById("payAmount").textContent = money(total);
   document.getElementById("count").textContent = count;
   document.getElementById("barCount").textContent = count;
   document.getElementById("barTotal").textContent = money(total);
@@ -333,6 +335,25 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") openCart(fal
   document.addEventListener("keydown", e => { if (e.key === "Escape") setOpen(false); });
 })();
 
+/* ---------- Proof of payment ---------- */
+/* Shrinks big phone screenshots/photos to a JPEG (max 1600px wide) so the email stays small. */
+async function shrinkImage(file) {
+  if (!/^image\/(jpeg|png|webp)$/.test(file.type)) return file;
+  try {
+    const bmp = await createImageBitmap(file);
+    const scale = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(bmp.width * scale);
+    canvas.height = Math.round(bmp.height * scale);
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(bmp, 0, 0, canvas.width, canvas.height);
+    const blob = await new Promise(res => canvas.toBlob(res, "image/jpeg", 0.82));
+    if (blob && blob.size < file.size) return new File([blob], file.name.replace(/\.[^.]+$/, "") + ".jpg", { type: "image/jpeg" });
+  } catch (e) { /* use the original file */ }
+  return file;
+}
+
 /* ---------- Checkout form ---------- */
 function initForm() {
   const form = document.getElementById("orderForm");
@@ -341,6 +362,45 @@ function initForm() {
   when.min = ORDER.firstTime;
   when.max = ORDER.lastTime;
   document.getElementById("payNote").textContent = ORDER.payNote;
+
+  const proofInput = document.getElementById("proof");
+  const preview = document.getElementById("proofPreview");
+  const thumb = document.getElementById("proofThumb");
+  let thumbUrl = "";
+  const sendBtn = document.getElementById("sendBtn");
+  const sendHint = document.getElementById("sendHint");
+  /* The Send order button only exists on screen once a proof of payment file has been chosen. */
+  function syncSend() {
+    const has = !!proofInput.files[0];
+    sendBtn.hidden = !has;
+    sendBtn.disabled = !has;
+    sendHint.hidden = has;
+  }
+  function clearProof() {
+    proofInput.value = "";
+    preview.hidden = true;
+    thumb.hidden = true;
+    thumb.removeAttribute("src");
+    if (thumbUrl) { URL.revokeObjectURL(thumbUrl); thumbUrl = ""; }
+    syncSend();
+  }
+  proofInput.addEventListener("change", () => {
+    const file = proofInput.files[0];
+    if (!file) { clearProof(); return; }
+    if (!/^image\//.test(file.type) && file.type !== "application/pdf") {
+      clearProof();
+      setError("proof", "Choose a photo or screenshot (JPG, PNG) or a PDF.");
+      return;
+    }
+    setError("proof", "");
+    document.getElementById("proofName").textContent = file.name;
+    if (thumbUrl) URL.revokeObjectURL(thumbUrl);
+    if (file.type.startsWith("image/")) { thumbUrl = URL.createObjectURL(file); thumb.src = thumbUrl; thumb.hidden = false; }
+    else thumb.hidden = true;
+    preview.hidden = false;
+    syncSend();
+  });
+  document.getElementById("proofRemove").addEventListener("click", () => { clearProof(); setError("proof", "Upload your proof of payment to send the order."); proofInput.focus(); });
 
   const hour = parseInt(new Intl.DateTimeFormat("en-GB", { hour: "2-digit", hour12: false, timeZone: "Asia/Manila" }).format(new Date()), 10);
   if (hour < SITE_CONFIG.OPEN_HOUR || hour >= SITE_CONFIG.CLOSE_HOUR) {
@@ -364,6 +424,7 @@ function initForm() {
     ok = setError("phone", /^(\+63|0)9\d{9}$/.test(phone) ? "" : "Use a Philippine mobile number, like 0917 123 4567.") && ok;
     const t = v("when");
     ok = setError("when", !t || (t >= ORDER.firstTime && t <= ORDER.lastTime) ? "" : "Choose a time between " + ORDER.firstTime + " and " + ORDER.lastTime + ", or leave it blank.") && ok;
+    ok = setError("proof", !proofInput.files[0] ? "Upload your proof of payment (a screenshot is fine)." : "") && ok;
     return ok;
   }
 
@@ -387,9 +448,20 @@ function initForm() {
     const lines = Object.keys(cart).filter(i => items[i]).map(i =>
       cart[i] + " x " + items[i].name + " (" + money(cart[i] * priceNumber(items[i].price)) + ")");
 
-    const button = document.getElementById("sendBtn");
+    const button = sendBtn;
     button.disabled = true;
     status.textContent = "Sending your order...";
+
+    let proof = null;
+    if (proofInput.files[0]) {
+      proof = await shrinkImage(proofInput.files[0]);
+      if (proof.size > ORDER.proofMaxBytes) {
+        setError("proof", "That file is too big (limit " + Math.round(ORDER.proofMaxBytes / 1048576) + " MB). Try a smaller screenshot.");
+        status.textContent = "Fix the highlighted fields and send again.";
+        button.disabled = false;
+        return;
+      }
+    }
 
     const payload = {
       order_number: orderId,
@@ -401,16 +473,22 @@ function initForm() {
       items: lines.join("\n"),
       total: money(total),
       notes: f.notes.value.trim() || "n/a",
+      proof_of_payment: proof ? "attached (" + proof.name + ")" : "none attached",
       _subject: "New order " + orderId + " from " + f.name.value.trim(),
       _template: "table",
       _captcha: "false"
     };
 
+    // Sent as a multipart form so the screenshot can travel as an email attachment.
+    const body = new FormData();
+    Object.keys(payload).forEach(k => body.append(k, payload[k]));
+    if (proof) body.append("attachment", proof, proof.name);
+
     try {
       const res = await fetch("https://formsubmit.co/ajax/" + encodeURIComponent(ORDER.email), {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify(payload)
+        headers: { "Accept": "application/json" },
+        body
       });
       const data = await res.json();
       if (!res.ok || String(data.success) !== "true") throw new Error(data.message || "Request failed");
@@ -418,6 +496,7 @@ function initForm() {
         "Thanks, " + payload.name + ". Your order " + orderId + " (" + money(total) + ") was sent to the cafe.";
       cart = {}; persist();
       form.reset();
+      clearProof();
       document.getElementById("tableField").hidden = true;
       status.textContent = "";
       openCart(false);
@@ -429,9 +508,9 @@ function initForm() {
       const hint = location.protocol === "file:"
         ? " Open the site from your web host instead of the file on your computer, then try again."
         : "";
-      status.textContent = "Sorry, the order did not go through." + hint + " Please try again, or order at the counter.";
+      status.textContent = "Sorry, the order did not go through." + hint + " Please try again, or message us directly.";
     } finally {
-      button.disabled = false;
+      syncSend();
     }
   });
 }

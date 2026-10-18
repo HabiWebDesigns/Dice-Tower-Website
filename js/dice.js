@@ -22,7 +22,14 @@
   }
 
   function resultRoll() {
-    return 67;
+    if (window.crypto && crypto.getRandomValues) {
+      const a = new Uint32Array(1);
+      do { crypto.getRandomValues(a); } while (a[0] >= 4294967250); // largest multiple of 50 below 2^32
+      if (a[0] % 50 === 0) return 67;
+    } else if (Math.random() < 0.02) {
+      return 67;
+    }
+    return d20();
   }
 
   function message(n) {

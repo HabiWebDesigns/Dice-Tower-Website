@@ -158,6 +158,14 @@ let savedCart = {};     // item name -> quantity (survives page reloads and shee
 let menuNote = "";
 
 try { savedCart = JSON.parse(localStorage.getItem("dt-cart") || "{}"); } catch (e) { savedCart = {}; }
+const orderWasSent = new URLSearchParams(location.search).get("order") === "sent";
+if (orderWasSent) {
+  savedCart = {};
+  try { localStorage.removeItem("dt-cart"); } catch (e) { /* storage may be blocked */ }
+  const cleanUrl = new URL(location.href);
+  cleanUrl.searchParams.delete("order");
+  history.replaceState(null, "", cleanUrl);
+}
 function persist() {
   try {
     const out = {};
@@ -464,57 +472,58 @@ function initForm() {
         button.disabled = false;
         return;
       }
+      if (proof !== proofInput.files[0]) {
+        try {
+          const transfer = new DataTransfer();
+          transfer.items.add(proof);
+          proofInput.files = transfer.files;
+        } catch (err) {
+          console.warn("Could not prepare the compressed proof for upload:", err);
+          status.textContent = "Your browser could not prepare the receipt for upload. Please try another browser or a smaller image.";
+          button.disabled = false;
+          return;
+        }
+      }
     }
 
-    const payload = {
-      order_number: orderId,
-      name: f.name.value.trim(),
-      mobile: f.phone.value.trim(),
-      order_type: f.orderType.value,
-      table: f.table.value.trim() || "n/a",
-      preferred_time: f.when.value || "as soon as possible",
-      items: lines.join("\n"),
-      total: money(total),
-      notes: f.notes.value.trim() || "n/a",
-      proof_of_payment: proof ? "attached (" + proof.name + ")" : "none attached",
-      _subject: "New order " + orderId + " from " + f.name.value.trim(),
-      _template: "table",
-      _captcha: "false"
+    const addHiddenField = (name, value) => {
+      let input = form.querySelector('input[type="hidden"][name="' + name + '"]');
+      if (!input) {
+        input = document.createElement("input");
+        input.type = "hidden";
+        input.name = name;
+        form.appendChild(input);
+      }
+      input.value = value;
     };
+    const phoneField = document.getElementById("phone");
+    const orderTypeField = document.getElementById("orderType");
+    const tableField = document.getElementById("table");
+    const whenField = document.getElementById("when");
+    const notesField = document.getElementById("notes");
+    const preferredTime = whenField.value || "as soon as possible";
+    phoneField.name = "mobile";
+    orderTypeField.name = "order_type";
+    whenField.removeAttribute("name");
+    tableField.value = tableField.value.trim() || "n/a";
+    notesField.value = notesField.value.trim() || "n/a";
+    const returnUrl = new URL(location.href);
+    returnUrl.searchParams.set("order", "sent");
+    [
+      ["order_number", orderId],
+      ["items", lines.join("\n")],
+      ["total", money(total)],
+      ["preferred_time", preferredTime],
+      ["_subject", "New order " + orderId + " from " + f.name.value.trim()],
+      ["_template", "table"],
+      ["_captcha", "false"],
+      ["_next", returnUrl.href]
+    ].forEach(([name, value]) => addHiddenField(name, value));
 
-    // Keep the named file input in the multipart data so FormSubmit receives a real attachment.
-    const body = new FormData(form);
-    Object.keys(payload).forEach(k => body.set(k, payload[k]));
-    if (proof) body.set("attachment", proof, proof.name);
-
-    try {
-      const res = await fetch("https://formsubmit.co/ajax/" + encodeURIComponent(ORDER.email), {
-        method: "POST",
-        headers: { "Accept": "application/json" },
-        body
-      });
-      const data = await res.json();
-      if (!res.ok || String(data.success) !== "true") throw new Error(data.message || "Request failed");
-      document.getElementById("doneText").textContent =
-        "Thanks, " + payload.name + ". Your order " + orderId + " (" + money(total) + ") was sent to the cafe.";
-      cart = {}; persist();
-      form.reset();
-      clearProof();
-      document.getElementById("tableField").hidden = true;
-      status.textContent = "";
-      openCart(false);
-      renderMenu(); renderCart();
-      document.getElementById("overlay").hidden = false;
-      document.getElementById("doneBtn").focus();
-    } catch (err) {
-      console.warn("Order failed:", err);
-      const hint = location.protocol === "file:"
-        ? " Open the site from your web host instead of the file on your computer, then try again."
-        : "";
-      status.textContent = "Sorry, the order did not go through." + hint + " Please try again, or message us directly.";
-    } finally {
-      syncSend();
-    }
+    form.action = "https://formsubmit.co/" + encodeURIComponent(ORDER.email);
+    form.method = "POST";
+    status.textContent = "Sending your order...";
+    form.submit();
   });
 }
 document.getElementById("doneBtn").addEventListener("click", () => { document.getElementById("overlay").hidden = true; });
@@ -531,5 +540,10 @@ async function init() {
   renderCart();
   document.getElementById("menuSearch").addEventListener("input", renderMenu);
   initForm();
+  if (orderWasSent) {
+    document.getElementById("doneText").textContent = "Your order was submitted to the cafe. Thank you!";
+    document.getElementById("overlay").hidden = false;
+    document.getElementById("doneBtn").focus();
+  }
 }
 init();

@@ -158,12 +158,15 @@ let savedCart = {};     // item name -> quantity (survives page reloads and shee
 let menuNote = "";
 
 try { savedCart = JSON.parse(localStorage.getItem("dt-cart") || "{}"); } catch (e) { savedCart = {}; }
-const orderWasSent = new URLSearchParams(location.search).get("order") === "sent";
+const returnParams = new URLSearchParams(location.search);
+const orderWasSent = returnParams.get("order") === "sent";
+const submittedOrderId = returnParams.get("order_number") || "";
 if (orderWasSent) {
   savedCart = {};
   try { localStorage.removeItem("dt-cart"); } catch (e) { /* storage may be blocked */ }
   const cleanUrl = new URL(location.href);
   cleanUrl.searchParams.delete("order");
+  cleanUrl.searchParams.delete("order_number");
   history.replaceState(null, "", cleanUrl);
 }
 function persist() {
@@ -509,6 +512,7 @@ function initForm() {
     notesField.value = notesField.value.trim() || "n/a";
     const returnUrl = new URL(location.href);
     returnUrl.searchParams.set("order", "sent");
+    returnUrl.searchParams.set("order_number", orderId);
     [
       ["order_number", orderId],
       ["items", lines.join("\n")],
@@ -541,7 +545,8 @@ async function init() {
   document.getElementById("menuSearch").addEventListener("input", renderMenu);
   initForm();
   if (orderWasSent) {
-    document.getElementById("doneText").textContent = "Your order was submitted to the cafe. Thank you!";
+    const orderReference = submittedOrderId ? " Order number: " + submittedOrderId + "." : "";
+    document.getElementById("doneText").textContent = "Your order was submitted to the cafe." + orderReference + " Thank you!";
     document.getElementById("overlay").hidden = false;
     document.getElementById("doneBtn").focus();
   }

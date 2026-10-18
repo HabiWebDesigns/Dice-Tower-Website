@@ -34,6 +34,45 @@
     return "Rough roll. Reroll, the dice owe you.";
   }
 
+  function playPageIntro() {
+    const intro = document.getElementById("pageIntro");
+    if (!intro) return;
+
+    const die = document.getElementById("introDie");
+    const cards = document.getElementById("introCards");
+    const status = document.getElementById("introMessage");
+    const skip = document.getElementById("introSkip");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const rollDuration = reduceMotion ? 500 : 1200;
+    const cardsDuration = reduceMotion ? 650 : 1600;
+    let finished = false;
+    let rollTimer;
+    let finishTimer;
+
+    function finish() {
+      if (finished) return;
+      finished = true;
+      window.clearTimeout(rollTimer);
+      window.clearTimeout(finishTimer);
+      intro.classList.add("is-finished");
+      window.setTimeout(() => {
+        intro.remove();
+        document.documentElement.classList.remove("intro-active");
+      }, reduceMotion ? 50 : 500);
+    }
+
+    skip.addEventListener("click", finish);
+    die.classList.add("is-rolling");
+    rollTimer = window.setTimeout(() => {
+      if (finished) return;
+      die.classList.remove("is-rolling");
+      die.classList.add("is-landed");
+      cards.classList.add("is-falling");
+      status.textContent = "Natural 20! Here come the cards.";
+    }, rollDuration);
+    finishTimer = window.setTimeout(finish, rollDuration + cardsDuration);
+  }
+
   function bindRoller(btn, numEl, result, history, bubble, closeBubble) {
     if (!btn) return;
     let rolling = false;
@@ -89,4 +128,5 @@
     document.getElementById("d20WidgetBubble"),
     document.getElementById("d20WidgetClose")
   );
+  playPageIntro();
 })();

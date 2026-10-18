@@ -10,11 +10,51 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;700&family=Metamorphous&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/dice.css?v=3">
+  <link rel="stylesheet" href="css/dice.css?v=4">
 </head>
 <body>
 
 <a class="skip" href="#menu">Skip to menu</a>
+
+<script>document.documentElement.classList.add("intro-active");</script>
+<div class="page-intro" id="pageIntro" aria-label="Dice Tower page intro">
+  <p class="intro-message" id="introMessage" aria-live="polite">Rolling for the perfect start...</p>
+  <div class="intro-die" id="introDie" aria-hidden="true">
+    <svg class="d20-svg" viewBox="0 0 200 200">
+      <polygon class="d20-body" points="100,8 180,54 180,146 100,192 20,146 20,54"/>
+      <polygon class="d20-face" points="100,36 152,134 48,134"/>
+      <path class="d20-edge" d="M100 8V36M20 54L100 36L180 54M48 134L20 54M48 134L20 146M48 134L100 192M152 134L180 54M152 134L180 146M152 134L100 192M48 134H152"/>
+      <text class="d20-num" x="100" y="100">20</text>
+    </svg>
+  </div>
+  <div class="intro-cards" id="introCards" aria-hidden="true">
+    <div class="intro-card intro-card--ember">
+      <span class="intro-card-cost">1</span>
+      <span class="intro-card-art"></span>
+      <span class="intro-card-title">Ember Adept</span>
+      <span class="intro-card-type">Creature</span>
+      <span class="intro-card-copy">A spark can light the way.</span>
+      <span class="intro-card-power">2/2</span>
+    </div>
+    <div class="intro-card intro-card--grove">
+      <span class="intro-card-cost">2</span>
+      <span class="intro-card-art"></span>
+      <span class="intro-card-title">Grove Guardian</span>
+      <span class="intro-card-type">Creature</span>
+      <span class="intro-card-copy">The old trees remember.</span>
+      <span class="intro-card-power">3/3</span>
+    </div>
+    <div class="intro-card intro-card--arcane">
+      <span class="intro-card-cost">3</span>
+      <span class="intro-card-art"></span>
+      <span class="intro-card-title">Arcane Insight</span>
+      <span class="intro-card-type">Spell</span>
+      <span class="intro-card-copy">Every roll tells a story.</span>
+      <span class="intro-card-power">*/*</span>
+    </div>
+  </div>
+  <button class="intro-skip" id="introSkip" type="button">Skip intro</button>
+</div>
 
 <header class="site-header">
   <a class="brand" href="#home" aria-label="Dice Tower, back to top">
@@ -211,6 +251,6 @@
 
 <script src="js/config.js?v=3"></script>
 <script src="js/script.js?v=3"></script>
-<script src="js/dice.js?v=3"></script>
+<script src="js/dice.js?v=4"></script>
 </body>
 </html>

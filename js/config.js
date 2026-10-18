@@ -34,6 +34,7 @@ const SITE_CONFIG = {
   ORDER_PAYMENT_NOTE: "",
 
   // Opening hours in 24-hour time (Philippine time). 11 to 20 = 11:00 AM to 8:00 PM.
+  OPEN_DAYS: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
   OPEN_HOUR: 11,
   CLOSE_HOUR: 20
 };

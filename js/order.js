@@ -403,7 +403,10 @@ function initForm() {
   document.getElementById("proofRemove").addEventListener("click", () => { clearProof(); setError("proof", "Upload your proof of payment to send the order."); proofInput.focus(); });
 
   const hour = parseInt(new Intl.DateTimeFormat("en-GB", { hour: "2-digit", hour12: false, timeZone: "Asia/Manila" }).format(new Date()), 10);
-  if (hour < SITE_CONFIG.OPEN_HOUR || hour >= SITE_CONFIG.CLOSE_HOUR) {
+  const day = new Intl.DateTimeFormat("en-US", { weekday: "long", timeZone: "Asia/Manila" }).format(new Date());
+  if (!SITE_CONFIG.OPEN_DAYS.includes(day)) {
+    document.getElementById("closedNote").textContent = "We are closed today. We will see your order when we open Monday at " + ORDER.openLabel + ".";
+  } else if (hour < SITE_CONFIG.OPEN_HOUR || hour >= SITE_CONFIG.CLOSE_HOUR) {
     document.getElementById("closedNote").textContent = "We are closed right now. We will see your order when we open at " + ORDER.openLabel + ".";
   }
 

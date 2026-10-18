@@ -203,8 +203,9 @@ async function initEvents() {
 function updateOpenStatus() {
   const badge = document.getElementById("openStatus");
   const hour = parseInt(new Intl.DateTimeFormat("en-GB", { hour: "2-digit", hour12: false, timeZone: "Asia/Manila" }).format(new Date()), 10);
-  const open = hour >= SITE_CONFIG.OPEN_HOUR && hour < SITE_CONFIG.CLOSE_HOUR;
-  badge.textContent = open ? "Open now, until 8:00 PM" : "Closed now. Open daily 11:00 AM to 8:00 PM";
+  const day = new Intl.DateTimeFormat("en-US", { weekday: "long", timeZone: "Asia/Manila" }).format(new Date());
+  const open = SITE_CONFIG.OPEN_DAYS.includes(day) && hour >= SITE_CONFIG.OPEN_HOUR && hour < SITE_CONFIG.CLOSE_HOUR;
+  badge.textContent = open ? "Open now, until 8:00 PM" : "Closed now. Open Monday to Saturday 11:00 AM to 8:00 PM";
   badge.classList.toggle("closed", !open);
 }
 

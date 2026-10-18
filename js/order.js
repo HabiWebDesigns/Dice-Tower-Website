@@ -482,10 +482,10 @@ function initForm() {
       _captcha: "false"
     };
 
-    // Sent as a multipart form so the screenshot can travel as an email attachment.
-    const body = new FormData();
-    Object.keys(payload).forEach(k => body.append(k, payload[k]));
-    if (proof) body.append("attachment", proof, proof.name);
+    // Keep the named file input in the multipart data so FormSubmit receives a real attachment.
+    const body = new FormData(form);
+    Object.keys(payload).forEach(k => body.set(k, payload[k]));
+    if (proof) body.set("attachment", proof, proof.name);
 
     try {
       const res = await fetch("https://formsubmit.co/ajax/" + encodeURIComponent(ORDER.email), {

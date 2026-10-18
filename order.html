@@ -65,7 +65,7 @@
         <p class="cart-empty" id="cartEmpty">Your cart is empty. Tap the plus button on any item to add it.</p>
         <div class="cart-total"><span>Total</span><strong id="cartTotal">₱0</strong></div>
 
-        <form id="orderForm" novalidate>
+        <form id="orderForm" enctype="multipart/form-data" novalidate>
           <h3>Your details</h3>
           <input type="text" name="_honey" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="field">
@@ -109,7 +109,7 @@
           </div>
           <div class="field" id="proofField">
             <label for="proof">Proof of payment <span class="optional">(required)</span></label>
-            <input id="proof" name="proof" type="file" accept="image/*,application/pdf" required>
+            <input id="proof" name="attachment" type="file" accept="image/*,application/pdf" required>
             <p class="hint">A screenshot of your payment receipt. JPG, PNG, or PDF.</p>
             <div class="proof-preview" id="proofPreview" hidden>
               <img id="proofThumb" alt="" hidden>

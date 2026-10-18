@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,160 +9,174 @@
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;700&family=Metamorphous&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;700&family=Metamorphous&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/order.css">
   <link rel="stylesheet" href="css/dice.css?v=3">
 </head>
+
 <body class="order-body">
 
-<a class="skip" href="#menuList">Skip to the food list</a>
+  <a class="skip" href="#menuList">Skip to the food list</a>
 
-<header class="site-header">
-  <a class="brand" href="index.html" aria-label="Dice Tower, back to the main site">
-    <img src="images/logo-wordmark.png" alt="Dice Tower" width="700" height="109">
-  </a>
-  <nav id="site-nav" class="site-nav">
-    <a href="index.html#menu">Menu</a>
-    <a href="index.html#events">Events</a>
-    <a href="index.html#about">About</a>
-    <a href="index.html#visit">Visit</a>
-    <a href="order.html" aria-current="page">Order online</a>
-    <a class="nav-cta" href="index.html#reserve">Reserve a table</a>
-  </nav>
-  <button class="cart-toggle" id="openCart" type="button" aria-label="Open your order">
-    Order <span class="count" id="count">0</span>
-  </button>
-  <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
-    <span></span><span></span><span></span>
-  </button>
-</header>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Dice Tower, back to the main site">
+      <img src="images/logo-wordmark.png" alt="Dice Tower" width="700" height="109">
+    </a>
+    <nav id="site-nav" class="site-nav">
+      <a href="index.html#menu">Menu</a>
+      <a href="index.html#events">Events</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#visit">Visit</a>
+      <a href="order.html" aria-current="page">Order online</a>
+      <a class="nav-cta" href="index.html#reserve">Reserve a table</a>
+    </nav>
+    <button class="cart-toggle" id="openCart" type="button" aria-label="Open your order">
+      Order <span class="count" id="count">0</span>
+    </button>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
 
-<main class="order-page">
-  <div class="section-head">
-    <h1>Order ahead</h1>
-    <p>Choose your drinks and food, then send your order to the cafe. We start preparing it as soon as we see it.</p>
-  </div>
+  <main class="order-page">
+    <div class="section-head">
+      <h1>Order ahead</h1>
+      <p>Choose your drinks and food, then send your order to the cafe. We start preparing it as soon as we see it.</p>
+    </div>
 
-  <div class="order-layout">
-    <section aria-label="Menu">
-      <div class="order-tools">
-        <div class="tabs" id="menuTabs" role="tablist" aria-label="Menu categories"></div>
-        <label class="search">
-          <span class="visually-hidden">Search the menu</span>
-          <input type="search" id="menuSearch" placeholder="Search drinks and food" autocomplete="off">
-        </label>
-      </div>
-      <div id="menuStatus" class="status-note" aria-live="polite">Loading the menu...</div>
-      <div id="menuList" class="food-grid"></div>
-    </section>
+    <div class="order-layout">
+      <section aria-label="Menu">
+        <div class="order-tools">
+          <div class="tabs" id="menuTabs" role="tablist" aria-label="Menu categories"></div>
+          <label class="search">
+            <span class="visually-hidden">Search the menu</span>
+            <input type="search" id="menuSearch" placeholder="Search drinks and food" autocomplete="off">
+          </label>
+        </div>
+        <div id="menuStatus" class="status-note" aria-live="polite">Loading the menu...</div>
+        <div id="menuList" class="food-grid"></div>
+      </section>
 
-    <aside class="cart" id="cart" aria-label="Your order">
-      <div class="cart-head">
-        <h2>Your order</h2>
-        <button class="cart-close" id="closeCart" type="button">Close</button>
-      </div>
-      <div class="cart-body">
-        <ul class="cart-lines" id="cartLines"></ul>
-        <p class="cart-empty" id="cartEmpty">Your cart is empty. Tap the plus button on any item to add it.</p>
-        <div class="cart-total"><span>Total</span><strong id="cartTotal">₱0</strong></div>
+      <aside class="cart" id="cart" aria-label="Your order">
+        <div class="cart-head">
+          <h2>Your order</h2>
+          <button class="cart-close" id="closeCart" type="button">Close</button>
+        </div>
+        <div class="cart-body">
+          <ul class="cart-lines" id="cartLines"></ul>
+          <p class="cart-empty" id="cartEmpty">Your cart is empty. Tap the plus button on any item to add it.</p>
+          <div class="cart-total"><span>Total</span><strong id="cartTotal">₱0</strong></div>
 
-        <form id="orderForm" enctype="multipart/form-data" novalidate>
-          <h3>Your details</h3>
-          <input type="text" name="_honey" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <div class="field">
-            <label for="name">Your name</label>
-            <input id="name" name="name" type="text" autocomplete="name" required>
-            <p class="error" id="nameError"></p>
-          </div>
-          <div class="field">
-            <label for="phone">Mobile number</label>
-            <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="0917 123 4567" required>
-            <p class="error" id="phoneError"></p>
-          </div>
-          <div class="field">
-            <label for="orderType">This order is for</label>
-            <select id="orderType" name="orderType"><option>Pickup</option><option>Dine-in</option></select>
-          </div>
-          <div class="field" id="tableField" hidden>
-            <label for="table">Table number or name <span class="optional">(optional)</span></label>
-            <input id="table" name="table" type="text">
-          </div>
-          <div class="field">
-            <label for="when">Preferred time <span class="optional">(optional)</span></label>
-            <input id="when" name="when" type="time">
-            <p class="error" id="whenError"></p>
-          </div>
-          <div class="field">
-            <label for="notes">Notes <span class="optional">(optional)</span></label>
-            <textarea id="notes" name="notes" rows="3" maxlength="300" placeholder="Less sugar, no onions, allergies..."></textarea>
-          </div>
-          <div class="pay-box">
-            <h3>Pay with InstaPay</h3>
-            <p class="pay-amount">Amount to pay: <strong id="payAmount">&#8369;0</strong></p>
-            <img class="qr" src="images/instapay-qr.png" alt="InstaPay QR code for Dice Tower Board Game Cafe" width="780" height="807">
-            <a class="qr-save" href="images/instapay-qr.png" download="dice-tower-instapay-qr.png">Save the QR image</a>
-            <ol class="pay-steps">
-              <li>Scan the QR with your bank or e-wallet app. On your phone, save the QR image and upload it in your app instead.</li>
-              <li>Pay the exact amount shown above.</li>
-              <li>Take a screenshot of your payment receipt and upload it below.</li>
-            </ol>
-            <p class="pay-note" id="payNote"></p>
-          </div>
-          <div class="field" id="proofField">
-            <label for="proof">Proof of payment <span class="optional">(required)</span></label>
-            <input id="proof" name="attachment" type="file" accept="image/*,application/pdf" required>
-            <p class="hint">A screenshot of your payment receipt. JPG, PNG, or PDF.</p>
-            <div class="proof-preview" id="proofPreview" hidden>
-              <img id="proofThumb" alt="" hidden>
-              <span id="proofName"></span>
-              <button type="button" class="proof-remove" id="proofRemove">Remove</button>
+          <form id="orderForm" enctype="multipart/form-data" novalidate>
+            <h3>Your details</h3>
+            <input type="text" name="_honey" class="visually-hidden" tabindex="-1" autocomplete="off"
+              aria-hidden="true">
+            <div class="field">
+              <label for="name">Your name</label>
+              <input id="name" name="name" type="text" autocomplete="name" required>
+              <p class="error" id="nameError"></p>
             </div>
-            <p class="error" id="proofError"></p>
-          </div>
-          <p class="pay-note" id="closedNote"></p>
-          <p class="send-hint" id="sendHint">The Send order button appears after you upload your proof of payment.</p>
-          <button class="btn btn-primary" type="submit" id="sendBtn" hidden disabled>Send order</button>
-          <p id="formStatus" class="form-status" aria-live="polite"></p>
-        </form>
-      </div>
-    </aside>
-  </div>
-</main>
+            <div class="field">
+              <label for="phone">Mobile number</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="0917 123 4567" required>
+              <p class="error" id="phoneError"></p>
+            </div>
+            <div class="field">
+              <label for="orderType">This order is for</label>
+              <select id="orderType" name="orderType">
+                <option>Pickup</option>
+                <option>Dine-in</option>
+              </select>
+            </div>
+            <div class="field" id="tableField" hidden>
+              <label for="table">Table number or name <span class="optional">(optional)</span></label>
+              <input id="table" name="table" type="text">
+            </div>
+            <div class="field">
+              <label for="when">Preferred time <span class="optional">(optional)</span></label>
+              <input id="when" name="when" type="time">
+              <p class="error" id="whenError"></p>
+            </div>
+            <div class="field">
+              <label for="notes">Notes <span class="optional">(optional)</span></label>
+              <textarea id="notes" name="notes" rows="3" maxlength="300"
+                placeholder="Less sugar, no onions, allergies..."></textarea>
+            </div>
+            <div class="pay-box">
+              <h3>Pay with InstaPay</h3>
+              <p class="pay-amount">Amount to pay: <strong id="payAmount">&#8369;0</strong></p>
+              <img class="qr" src="images/instapay-qr.png" alt="InstaPay QR code for Dice Tower Board Game Cafe"
+                width="780" height="807">
+              <a class="qr-save" href="images/instapay-qr.png" download="dice-tower-instapay-qr.png">Save the QR
+                image</a>
+              <ol class="pay-steps">
+                <li>Scan the QR with your bank or e-wallet app. On your phone, save the QR image and upload it in your
+                  app instead.</li>
+                <li>Pay the exact amount shown above.</li>
+                <li>Take a screenshot of your payment receipt and upload it below.</li>
+              </ol>
+              <p class="pay-note" id="payNote"></p>
+            </div>
+            <div class="field" id="proofField">
+              <label for="proof">Proof of payment <span class="optional">(required)</span></label>
+              <input id="proof" name="attachment" type="file" accept="image/*,application/pdf" required>
+              <p class="hint">A screenshot of your payment receipt. JPG, PNG, or PDF.</p>
+              <div class="proof-preview" id="proofPreview" hidden>
+                <img id="proofThumb" alt="" hidden>
+                <span id="proofName"></span>
+                <button type="button" class="proof-remove" id="proofRemove">Remove</button>
+              </div>
+              <p class="error" id="proofError"></p>
+            </div>
+            <p class="pay-note" id="closedNote"></p>
+            <p class="send-hint" id="sendHint">The Send order button appears after you upload your proof of payment.</p>
+            <button class="btn btn-primary" type="submit" id="sendBtn" hidden disabled>Send order</button>
+            <p id="formStatus" class="form-status" aria-live="polite"></p>
+          </form>
+        </div>
+      </aside>
+    </div>
+  </main>
 
-<button class="cart-bar" id="cartBar" type="button" hidden>
-  <span><span id="barCount">0</span> items</span><span>View order</span><strong id="barTotal">₱0</strong>
-</button>
-
-<div class="overlay" id="overlay" hidden>
-  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="doneTitle">
-    <h2 id="doneTitle">Order sent</h2>
-    <p id="doneText"></p>
-    <button class="btn btn-primary" type="button" id="doneBtn">Done</button>
-  </div>
-</div>
-
-<aside class="d20-widget" aria-label="D20 dice roller">
-  <div class="d20-widget-bubble" id="d20WidgetBubble">
-    <p class="d20-widget-text" id="d20WidgetText" aria-live="polite">Tap for a roll!</p>
-    <button class="d20-widget-close" id="d20WidgetClose" type="button" aria-label="Close D20 speech bubble">&times;</button>
-  </div>
-  <button class="d20-widget-btn" id="d20WidgetBtn" type="button" aria-label="Roll the D20">
-    <svg class="d20-svg" id="d20WidgetSvg" viewBox="0 0 200 200" aria-hidden="true">
-      <polygon class="d20-body" points="100,8 180,54 180,146 100,192 20,146 20,54"/>
-      <polygon class="d20-face" points="100,36 152,134 48,134"/>
-      <path class="d20-edge" d="M100 8V36M20 54L100 36L180 54M48 134L20 54M48 134L20 146M48 134L100 192M152 134L180 54M152 134L180 146M152 134L100 192M48 134H152"/>
-      <text class="d20-num" id="d20WidgetNum" x="100" y="100">20</text>
-    </svg>
+  <button class="cart-bar" id="cartBar" type="button" hidden>
+    <span><span id="barCount">0</span> items</span><span>View order</span><strong id="barTotal">₱0</strong>
   </button>
-</aside>
 
-<footer class="site-footer">
-  <p><strong>Dice Tower Board Game Cafe</strong>, Golden Country Homes, Alanginan. Open Monday to Saturday 11:00 AM to 8:00 PM.</p>
-</footer>
+  <div class="overlay" id="overlay" hidden>
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="doneTitle">
+      <h2 id="doneTitle">Order sent</h2>
+      <p id="doneText"></p>
+      <button class="btn btn-primary" type="button" id="doneBtn">Done</button>
+    </div>
+  </div>
 
-<script src="js/config.js?v=3"></script>
-<script src="js/order.js?v=3"></script>
-<script src="js/dice.js?v=3"></script>
+  <aside class="d20-widget" aria-label="D20 dice roller">
+    <div class="d20-widget-bubble" id="d20WidgetBubble">
+      <p class="d20-widget-text" id="d20WidgetText" aria-live="polite">Tap for a roll!</p>
+      <button class="d20-widget-close" id="d20WidgetClose" type="button"
+        aria-label="Close D20 speech bubble">&times;</button>
+    </div>
+    <button class="d20-widget-btn" id="d20WidgetBtn" type="button" aria-label="Roll the D20">
+      <svg class="d20-svg" id="d20WidgetSvg" viewBox="0 0 200 200" aria-hidden="true">
+        <polygon class="d20-body" points="100,8 180,54 180,146 100,192 20,146 20,54" />
+        <polygon class="d20-face" points="100,36 152,134 48,134" />
+        <path class="d20-edge"
+          d="M100 8V36M20 54L100 36L180 54M48 134L20 54M48 134L20 146M48 134L100 192M152 134L180 54M152 134L180 146M152 134L100 192M48 134H152" />
+        <text class="d20-num" id="d20WidgetNum" x="100" y="100">20</text>
+      </svg>
+    </button>
+  </aside>
+
+  <footer class="site-footer">
+    <p><strong>Dice Tower Board Game Cafe</strong>, Golden Country Homes, Alanginan. Open Monday to Saturday 11:00 AM to
+      8:00 PM.</p>
+  </footer>
+
+  <script src="js/config.js?v=3"></script>
+  <script src="js/order.js?v=3"></script>
+  <script src="js/dice.js?v=3"></script>
 </body>
+
 </html>

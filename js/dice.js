@@ -21,7 +21,12 @@
     return Math.floor(Math.random() * 20) + 1;
   }
 
+  function resultRoll() {
+    return 67;
+  }
+
   function message(n) {
+    if (n === 67) return "SIIIIIXXXXXX SEEEEEEEEVVVVVVEEEEEEENNN";
     if (n === 20) return "Natural 20! Critical hit!";
     if (n === 1) return "Natural 1. Critical fail. Coffee will fix it.";
     if (n >= 15) return "Great roll. The table is yours.";
@@ -40,7 +45,7 @@
     const flicker = setInterval(() => { numEl.textContent = d20(); }, 70);
     setTimeout(() => {
       clearInterval(flicker);
-      const n = d20();
+      const n = resultRoll();
       numEl.textContent = n;
       result.textContent = "You rolled a " + n + ". " + message(n);
       btn.classList.remove("rolling");

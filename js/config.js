@@ -14,6 +14,20 @@ const SITE_CONFIG = {
   // The first request triggers an activation email from FormSubmit: click the link in it once.
   RESERVATION_EMAIL: "cantosherbie@gmail.com",
 
+  // ----- Order page (order.html). All optional: delete or leave as is to use the defaults. -----
+  // Orders are emailed here through FormSubmit. If left empty, RESERVATION_EMAIL above is used.
+  ORDER_EMAIL: "",
+
+  // Food photos: put image files in this folder (the menu sheet can also have an "Image" column).
+  ORDER_IMAGE_FOLDER: "images/menu/",
+
+  // true = if an item has no Image in the sheet, look for images/menu/<item-name>.jpg (or .png / .webp),
+  // for example images/menu/spanish-latte.jpg
+  ORDER_PHOTO_BY_NAME: true,
+
+  // Shown above the Send order button. Change it to match your cafe's policy, or use "" to hide it.
+  ORDER_PAYMENT_NOTE: "Payment is made at the cafe.",
+
   // Opening hours in 24-hour time (Philippine time). 11 to 20 = 11:00 AM to 8:00 PM.
   OPEN_HOUR: 11,
   CLOSE_HOUR: 20

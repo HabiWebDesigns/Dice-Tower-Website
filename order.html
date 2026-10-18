@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Order Online | Dice Tower Board Game Cafe</title>
+  <meta name="description" content="Order coffee, pastries and brunch from Dice Tower Board Game Cafe ahead of time.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;700&family=Metamorphous&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/order.css">
+</head>
+<body>
+
+<a class="skip" href="#menuList">Skip to the food list</a>
+
+<header class="site-header">
+  <a class="brand" href="index.html" aria-label="Dice Tower, back to the main site">
+    <img src="images/logo-wordmark.png" alt="Dice Tower" width="700" height="109">
+  </a>
+  <nav id="site-nav" class="site-nav">
+    <a href="index.html#menu">Menu</a>
+    <a href="index.html#events">Events</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#visit">Visit</a>
+    <a href="order.html" aria-current="page">Order online</a>
+    <a class="nav-cta" href="index.html#reserve">Reserve a table</a>
+  </nav>
+  <button class="cart-toggle" id="openCart" type="button" aria-label="Open your order">
+    Order <span class="count" id="count">0</span>
+  </button>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<main class="order-page">
+  <div class="section-head">
+    <h1>Order ahead</h1>
+    <p>Choose your drinks and food, then send your order to the cafe. We start preparing it as soon as we see it.</p>
+  </div>
+
+  <div class="order-layout">
+    <section aria-label="Menu">
+      <div class="order-tools">
+        <div class="tabs" id="menuTabs" role="tablist" aria-label="Menu categories"></div>
+        <label class="search">
+          <span class="visually-hidden">Search the menu</span>
+          <input type="search" id="menuSearch" placeholder="Search drinks and food" autocomplete="off">
+        </label>
+      </div>
+      <div id="menuStatus" class="status-note" aria-live="polite">Loading the menu...</div>
+      <div id="menuList" class="food-grid"></div>
+    </section>
+
+    <aside class="cart" id="cart" aria-label="Your order">
+      <div class="cart-head">
+        <h2>Your order</h2>
+        <button class="cart-close" id="closeCart" type="button">Close</button>
+      </div>
+      <div class="cart-body">
+        <ul class="cart-lines" id="cartLines"></ul>
+        <p class="cart-empty" id="cartEmpty">Your cart is empty. Tap the plus button on any item to add it.</p>
+        <div class="cart-total"><span>Total</span><strong id="cartTotal">₱0</strong></div>
+
+        <form id="orderForm" novalidate>
+          <h3>Your details</h3>
+          <input type="text" name="_honey" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="field">
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+            <p class="error" id="nameError"></p>
+          </div>
+          <div class="field">
+            <label for="phone">Mobile number</label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="0917 123 4567" required>
+            <p class="error" id="phoneError"></p>
+          </div>
+          <div class="field">
+            <label for="orderType">This order is for</label>
+            <select id="orderType" name="orderType"><option>Pickup</option><option>Dine-in</option></select>
+          </div>
+          <div class="field" id="tableField" hidden>
+            <label for="table">Table number or name <span class="optional">(optional)</span></label>
+            <input id="table" name="table" type="text">
+          </div>
+          <div class="field">
+            <label for="when">Preferred time <span class="optional">(optional)</span></label>
+            <input id="when" name="when" type="time">
+            <p class="error" id="whenError"></p>
+          </div>
+          <div class="field">
+            <label for="notes">Notes <span class="optional">(optional)</span></label>
+            <textarea id="notes" name="notes" rows="3" maxlength="300" placeholder="Less sugar, no onions, allergies..."></textarea>
+          </div>
+          <p class="pay-note" id="payNote"></p>
+          <p class="pay-note" id="closedNote"></p>
+          <button class="btn btn-primary" type="submit" id="sendBtn">Send order</button>
+          <p id="formStatus" class="form-status" aria-live="polite"></p>
+        </form>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<button class="cart-bar" id="cartBar" type="button" hidden>
+  <span><span id="barCount">0</span> items</span><span>View order</span><strong id="barTotal">₱0</strong>
+</button>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="doneTitle">
+    <h2 id="doneTitle">Order sent</h2>
+    <p id="doneText"></p>
+    <button class="btn btn-primary" type="button" id="doneBtn">Done</button>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p><strong>Dice Tower Board Game Cafe</strong>, Golden Country Homes, Alanginan. Open daily 11:00 AM to 8:00 PM.</p>
+</footer>
+
+<script src="js/config.js?v=3"></script>
+<script src="js/order.js?v=1"></script>
+</body>
+</html>

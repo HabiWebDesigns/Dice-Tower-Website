@@ -625,3 +625,159 @@
     transition: none;
   }
 }
+
+/* ===== Medieval market styling for the order hall ===== */
+.order-page {
+  min-height: 80vh;
+  padding-top: clamp(2.5rem, 6vw, 5rem);
+  background-image: radial-gradient(ellipse at 78% 0%, rgba(233, 181, 160, .24), transparent 34%);
+}
+
+.order-page > .section-head {
+  max-width: 850px;
+  margin-bottom: 2.5rem;
+  padding: clamp(1.2rem, 3vw, 2.2rem);
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--dragon);
+  background: linear-gradient(110deg, var(--parchment), var(--paper));
+  box-shadow: 7px 7px 0 rgba(230, 207, 184, .55);
+}
+
+.order-page > .section-head h1 {
+  color: var(--tower);
+  font-size: clamp(2.5rem, 6vw, 4.4rem);
+}
+
+.order-page > .section-head h1::after {
+  display: block;
+  width: 3.8rem;
+  height: 3px;
+  margin-top: .65rem;
+  background: var(--flame);
+  content: "";
+}
+
+.order-tools {
+  border-bottom: 3px solid var(--dragon);
+  box-shadow: 0 5px 0 rgba(230, 207, 184, .45);
+}
+
+.order-tools .tab { border-radius: 4px 12px 4px 12px; }
+
+.food {
+  border-radius: 4px 15px 4px 15px;
+  box-shadow: 4px 5px 0 rgba(230, 207, 184, .55);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.food:hover { transform: translateY(-6px) rotate(-.35deg); box-shadow: 6px 12px 0 rgba(230, 207, 184, .5); }
+.food-cat { border-bottom-width: 3px; }
+.photo { background: linear-gradient(135deg, var(--tower), var(--maroon), var(--flame)); }
+.food-name { font-family: var(--font-display); font-size: 1rem; }
+
+.cart {
+  border-radius: 4px 16px 4px 16px;
+  box-shadow: 7px 8px 0 rgba(45, 23, 16, .17);
+}
+
+.cart-head { padding-top: 1.25rem; }
+.cart-total { border-top-style: double; }
+.pay-box { border-radius: 4px 14px 4px 14px; box-shadow: inset 0 0 0 4px rgba(230, 207, 184, .2); }
+.dialog { border-radius: 4px 16px 4px 16px; box-shadow: 10px 12px 0 rgba(27, 18, 16, .25); }
+.cart-toggle, .cart-bar { border-radius: 4px 14px 4px 14px; box-shadow: 3px 4px 0 var(--tower); }
+
+@media (max-width: 820px) {
+  .cart { border-radius: 18px 18px 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .food:hover { transform: none; }
+}
+
+/* Mobile: keep category filters on one scrollable row and give menu groups room. */
+@media (max-width: 820px) {
+  .order-tools { gap: 1rem; padding-block: 1rem; margin-bottom: 1.5rem; }
+  .order-tools .tabs { gap: .65rem; padding: .15rem .1rem .55rem; }
+  .order-tools .tab { min-height: 44px; padding: .55rem 1rem; white-space: nowrap; }
+  .order-tools .search input { min-height: 48px; }
+  .food-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.35rem; }
+  .food-cat { margin: 2.1rem 0 .35rem; padding-bottom: .55rem; }
+  .food-body { padding: 1rem 1.1rem 1.15rem; }
+}
+
+@media (max-width: 640px) {
+  .food-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+  .food {
+    min-width: 0;
+    border-radius: 5px;
+    box-shadow: 2px 3px 0 rgba(230, 207, 184, .55);
+  }
+  .food .photo { aspect-ratio: 1.35 / 1; }
+  .food-body { min-width: 0; padding: .65rem; gap: .15rem; }
+  .food-name { font-size: .92rem; overflow-wrap: anywhere; }
+  .food-desc { font-size: .82rem; line-height: 1.3; }
+  .food-row { flex-wrap: wrap; gap: .35rem; padding-top: .45rem; }
+  .food-price { font-size: .9rem; }
+  .food .ctl { gap: .15rem; }
+  .food .rnd { width: 29px; height: 29px; font-size: 1.05rem; }
+  .food .qty { min-width: 1.1rem; font-size: .9rem; }
+}
+
+@media (max-width: 380px) {
+  .food-grid { gap: .55rem; }
+  .food-body { padding: .55rem; }
+  .food-name { font-size: .87rem; }
+  .food-desc { font-size: .78rem; }
+  .food .rnd { width: 27px; height: 27px; }
+}
+
+@media (max-width: 820px) {
+  .order-body .site-header { gap: .45rem; padding-inline: .7rem; }
+  .order-body .brand { flex: 1 1 auto; min-width: 0; }
+  .order-body .brand img { height: clamp(24px, 7.4vw, 30px); }
+
+  .cart-toggle {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    margin: 0 .15rem 0 0;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 5px 13px 5px 13px;
+    box-shadow: none;
+    cursor: pointer;
+  }
+
+  .cart-toggle:hover { background: var(--parchment); }
+
+  .cart-icon {
+    width: 23px;
+    height: 23px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .cart-toggle .count {
+    position: absolute;
+    top: -5px;
+    right: -6px;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 .25rem;
+    color: #fff;
+    background: var(--dragon);
+    border: 1px solid var(--paper);
+    font-size: .7rem;
+  }
+
+  .cart-bar { display: none; }
+  .order-page { padding-bottom: 2rem; }
+}

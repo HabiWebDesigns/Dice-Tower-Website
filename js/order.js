@@ -294,6 +294,7 @@ function renderCart() {
   document.getElementById("cartTotal").textContent = money(total);
   document.getElementById("payAmount").textContent = money(total);
   document.getElementById("count").textContent = count;
+  document.getElementById("openCart").setAttribute("aria-label", "Open your cart, " + count + (count === 1 ? " item" : " items"));
   document.getElementById("barCount").textContent = count;
   document.getElementById("barTotal").textContent = money(total);
   document.getElementById("cartBar").hidden = count === 0 || document.getElementById("cart").classList.contains("open");

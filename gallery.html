@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gallery | Dice Tower Board Game Cafe</title>
+  <meta name="description" content="Photos and memories from Dice Tower Board Game Cafe.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;700&family=Metamorphous&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/gallery.css">
+</head>
+<body class="gallery-page">
+  <a class="skip" href="#gallery">Skip to the gallery</a>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Dice Tower, back to the main site">
+      <img src="images/logo-wordmark.png" alt="Dice Tower" width="700" height="109">
+    </a>
+    <nav id="site-nav" class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="order.html">Menu</a>
+      <a href="gallery.html" aria-current="page">Gallery</a>
+      <a href="index.html#events">Events</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#visit">Visit</a>
+      <a class="nav-cta" href="index.html#reserve">Reserve a table</a>
+    </nav>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main id="gallery" class="gallery-main">
+    <section class="gallery-heading">
+      <p class="gallery-kicker">Tales from the table</p>
+      <h1>Dice Tower Gallery</h1>
+      <p>Take a look around the cafe, see what’s been happening, and find a few familiar faces from game night.</p>
+    </section>
+
+    <section class="gallery-section" aria-label="Photos from Dice Tower">
+      <p class="gallery-status" id="galleryStatus" role="status" aria-live="polite">Loading photos…</p>
+      <div class="gallery-grid" id="galleryGrid"></div>
+    </section>
+  </main>
+
+  <dialog class="photo-viewer" id="photoViewer" aria-label="Photo viewer">
+    <button class="photo-viewer-close" id="photoViewerClose" type="button" aria-label="Close photo">&times;</button>
+    <img id="photoViewerImage" alt="">
+    <p id="photoViewerCaption"></p>
+  </dialog>
+
+  <footer class="site-footer">
+    <p><strong>Dice Tower Board Game Cafe</strong>, Golden Country Homes, Alanginan. Open Monday to Saturday 11:00 AM to 8:00 PM.</p>
+  </footer>
+  <script src="js/gallery.js?v=2"></script>
+</body>
+</html>

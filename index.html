@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<a class="skip" href="#menu">Skip to menu</a>
+<a class="skip" href="#events">Skip to content</a>
 
 <script>document.documentElement.classList.add("intro-active");</script>
 <div class="page-intro" id="pageIntro" aria-label="Dice Tower page intro">
@@ -64,11 +64,11 @@
     <span></span><span></span><span></span>
   </button>
   <nav id="site-nav" class="site-nav">
-    <a href="#menu">Menu</a>
+    <a href="order.html">Menu</a>
+    <a href="gallery.html">Gallery</a>
     <a href="#events">Events</a>
     <a href="#about">About</a>
     <a href="#visit">Visit</a>
-    <a href="order.html">Order online</a>
     <a class="nav-cta" href="#reserve">Reserve a table</a>
   </nav>
 </header>
@@ -78,38 +78,18 @@
 <!-- HERO -->
 <section id="home" class="hero">
   <div class="hero-text">
-    <p class="open-status" id="openStatus" aria-live="polite">Open Monday to Saturday, 11:00 AM to 8:00 PM</p>
-    <h1>Coffee on the left. Your deck on the right.</h1>
+    <h1>Coffee, cards, and quests await.</h1>
     <p class="lede">A board game cafe with a local game store feel in Golden Country Homes, Alanginan. Grab a latte, claim a table, and play Magic, Dungeons and Dragons, or anything off our shelf.</p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="#menu">See the menu</a>
+      <a class="btn btn-primary" href="order.html">Explore the menu</a>
       <a class="btn btn-ghost" href="#reserve">Reserve a table</a>
     </div>
   </div>
   <div class="hero-art">
     <img src="images/logo.png" width="847" height="1000"
          alt="Dice Tower logo: a red dragon curled around a stone tower, serving a burger on a platter">
+    <p class="open-status" id="openStatus" aria-live="polite">Open Monday to Saturday, 11:00 AM to 8:00 PM</p>
   </div>
-</section>
-
-<!-- MENU -->
-<section id="menu" class="section">
-  <div class="section-head">
-    <h2>The menu</h2>
-    <p>Prices in Philippine pesos. Sold-out items are greyed out until we restock.</p>
-    <p><a class="btn btn-primary" href="order.html">Order online</a></p>
-  </div>
-
-  <div class="menu-tools">
-    <div class="tabs" id="menuTabs" role="tablist" aria-label="Menu categories"></div>
-    <label class="search">
-      <span class="visually-hidden">Search the menu</span>
-      <input type="search" id="menuSearch" placeholder="Search drinks and food" autocomplete="off">
-    </label>
-  </div>
-
-  <div id="menuStatus" class="status-note" aria-live="polite">Loading the menu...</div>
-  <div id="menuList" class="menu-grid"></div>
 </section>
 
 <!-- EVENTS -->
@@ -119,7 +99,9 @@
     <p>Sign up at the counter or reserve a table below. Seats fill up fast on tournament nights.</p>
   </div>
   <div id="eventsStatus" class="status-note" aria-live="polite">Loading events...</div>
-  <ul id="eventsList" class="events"></ul>
+  <div class="quest-board">
+    <ul id="eventsList" class="events"></ul>
+  </div>
 </section>
 
 <!-- ABOUT -->

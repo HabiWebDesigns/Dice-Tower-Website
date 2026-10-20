@@ -1,0 +1,133 @@
+.gallery-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 50% 0, rgba(240, 132, 44, .1), transparent 48rem),
+    var(--paper);
+}
+
+.gallery-main {
+  width: min(1160px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 5rem) 0 4rem;
+}
+
+.gallery-heading {
+  max-width: 720px;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+.gallery-heading h1 {
+  color: var(--tower);
+  margin-bottom: .35em;
+}
+
+.gallery-heading p:not(.gallery-kicker) {
+  margin: 0 auto 1.5rem;
+}
+
+.gallery-kicker {
+  margin: 0 auto .65rem;
+  color: var(--maroon);
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-size: .8rem;
+}
+
+.gallery-section {
+  min-height: 180px;
+}
+
+.gallery-status {
+  margin: 0 auto 1.25rem;
+  color: var(--tower-soft);
+  text-align: center;
+}
+
+.gallery-status:empty {
+  display: none;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(.65rem, 1.7vw, 1.25rem);
+}
+
+.gallery-photo {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border: 4px solid var(--tower);
+  border-radius: 8px;
+  padding: 0;
+  background: var(--parchment);
+  box-shadow: 0 8px 20px rgba(45, 23, 16, .15);
+  cursor: zoom-in;
+}
+
+.gallery-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .35s ease;
+}
+
+.gallery-photo:hover img,
+.gallery-photo:focus-visible img {
+  transform: scale(1.045);
+}
+
+.photo-viewer {
+  position: fixed;
+  width: min(94vw, 1100px);
+  max-width: none;
+  max-height: 92vh;
+  padding: .8rem;
+  border: 5px solid var(--tower);
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, .55);
+}
+
+.photo-viewer::backdrop {
+  background: rgba(27, 18, 16, .82);
+}
+
+.photo-viewer img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(92vh - 5rem);
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.photo-viewer p {
+  margin: .6rem 2.5rem 0 .2rem;
+  font-weight: 700;
+}
+
+.photo-viewer-close {
+  position: absolute;
+  top: .45rem;
+  right: .45rem;
+  z-index: 1;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 50%;
+  background: var(--tower);
+  color: var(--paper);
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+@media (max-width: 760px) {
+  .gallery-main { width: min(100% - 1rem, 1160px); padding-top: 2rem; }
+  .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+  .gallery-photo { border-width: 3px; }
+}

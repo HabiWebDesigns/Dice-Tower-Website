@@ -489,7 +489,7 @@ html.intro-active .page-intro {
   }
 
   .order-body .d20-widget {
-    bottom: calc(5.2rem + env(safe-area-inset-bottom, 0px));
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
   }
 
   .intro-card--ember {

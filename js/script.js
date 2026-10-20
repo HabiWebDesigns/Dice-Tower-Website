@@ -146,6 +146,8 @@ function renderMenu() {
 }
 
 async function initMenu() {
+  // The index no longer hosts the menu; online ordering owns that experience.
+  if (!document.getElementById("menuList")) return;
   const url = SITE_CONFIG.MENU_CSV_URL;
   const { rows, live } = await loadRows(url, SAMPLE_MENU);
   menuItems = rows.filter(r => r.name);
@@ -174,6 +176,37 @@ function formatEventDate(value) {
   return value; // text such as "Every Friday"
 }
 
+function randomizePaperCuts(paper) {
+  const edges = ["top", "right", "bottom", "left"];
+  for (let i = edges.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [edges[i], edges[j]] = [edges[j], edges[i]];
+  }
+
+  const cuts = Object.fromEntries(edges.slice(0, 3).map(edge => [edge, {
+    at: 15 + Math.random() * 70,
+    depth: 1.8 + Math.random() * 1.5
+  }]));
+  const points = ["0% 0%"];
+  const point = (x, y) => points.push(x + "% " + y + "%");
+  const top = cuts.top;
+  if (top) { point(top.at - 3, 0); point(top.at, top.depth); point(top.at + 3, 0); }
+  point(100, 0);
+
+  const right = cuts.right;
+  if (right) { point(100, right.at - 3); point(100 - right.depth, right.at); point(100, right.at + 3); }
+  point(100, 100);
+
+  const bottom = cuts.bottom;
+  if (bottom) { point(bottom.at + 3, 100); point(bottom.at, 100 - bottom.depth); point(bottom.at - 3, 100); }
+  point(0, 100);
+
+  const left = cuts.left;
+  if (left) { point(0, left.at + 3); point(left.depth, left.at); point(0, left.at - 3); }
+
+  paper.style.clipPath = "polygon(" + points.join(", ") + ")";
+}
+
 async function initEvents() {
   const url = SITE_CONFIG.EVENTS_CSV_URL;
   const { rows, live } = await loadRows(url, SAMPLE_EVENTS);
@@ -189,6 +222,7 @@ async function initEvents() {
 
   events.forEach(r => {
     const li = el("li", "event");
+    randomizePaperCuts(li);
     li.appendChild(el("p", "event-when", [formatEventDate(r.date), r.time].filter(Boolean).join(", ")));
     li.appendChild(el("h3", "", r.title));
     if (r.description) li.appendChild(el("p", "", r.description));
@@ -213,6 +247,7 @@ function updateOpenStatus() {
 function initNav() {
   const toggle = document.querySelector(".nav-toggle");
   const nav = document.getElementById("site-nav");
+  if (!toggle || !nav) return;
   const setOpen = open => {
     nav.classList.toggle("open", open);
     toggle.setAttribute("aria-expanded", open);
@@ -221,6 +256,23 @@ function initNav() {
   toggle.addEventListener("click", () => setOpen(!nav.classList.contains("open")));
   nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setOpen(false)));
   document.addEventListener("keydown", e => { if (e.key === "Escape") setOpen(false); });
+}
+
+/* ---------- Scroll reveals ---------- */
+function initMotion() {
+  const targets = document.querySelectorAll(".hero-text, .hero-art, .section-head, .events, .about-copy, .about-facts, .dice > div, .visit-info, .map-frame, .form, .order-page > .section-head, .order-layout > section, .cart");
+  if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-visible");
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12 });
+  targets.forEach(target => {
+    target.classList.add("reveal");
+    observer.observe(target);
+  });
 }
 
 /* ---------- Reservation form ---------- */
@@ -314,3 +366,4 @@ updateOpenStatus();
 initMenu();
 initEvents();
 initForm();
+initMotion();

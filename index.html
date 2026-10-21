@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;700&family=Metamorphous&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/dice.css?v=5">
+  <link rel="stylesheet" href="css/walking-cat.css">
 </head>
 <body>
 
@@ -66,6 +67,7 @@
   <nav id="site-nav" class="site-nav">
     <a href="order.html">Menu</a>
     <a href="gallery.html">Gallery</a>
+    <a href="activities.html">Interactive Activities</a>
     <a href="#events">Events</a>
     <a href="#about">About</a>
     <a href="#visit">Visit</a>
@@ -116,26 +118,6 @@
     <li><strong>Board game library</strong> free to play with any order</li>
     <li><strong>Student friendly</strong> prices and long, quiet afternoons</li>
   </ul>
-</section>
-
-<!-- D20 -->
-<section id="dice" class="section dice">
-  <div>
-    <h2>Roll the d20</h2>
-    <p>Can't pick a drink? Waiting for your pod to fill up? Tap the die and let fate decide. A natural 20 means you are definitely having dessert.</p>
-  </div>
-  <div class="d20-stage">
-    <button class="d20-btn" id="d20Btn" type="button" aria-label="Roll the d20">
-      <svg class="d20-svg" viewBox="0 0 200 200" aria-hidden="true">
-        <polygon class="d20-body" points="100,8 180,54 180,146 100,192 20,146 20,54"/>
-        <polygon class="d20-face" points="100,36 152,134 48,134"/>
-        <path class="d20-edge" d="M100 8V36M20 54L100 36L180 54M48 134L20 54M48 134L20 146M48 134L100 192M152 134L180 54M152 134L180 146M152 134L100 192M48 134H152"/>
-        <text class="d20-num" id="d20Num" x="100" y="100">20</text>
-      </svg>
-    </button>
-    <p class="d20-result" id="d20Result" aria-live="polite">Tap the die to roll.</p>
-    <ul class="d20-history" id="d20History" aria-label="Recent rolls"></ul>
-  </div>
 </section>
 
 <!-- VISIT -->
@@ -226,6 +208,33 @@
     </svg>
   </button>
 </aside>
+
+<div class="walking-cat" aria-hidden="true">
+  <svg class="walking-cat-svg" viewBox="0 0 180 110" role="presentation">
+    <g class="cat-tail">
+      <path class="cat-tail-base" d="M47 61C25 57 19 43 25 28C29 18 40 17 45 25"/>
+      <path class="cat-stripe cat-tail-stripe" d="M25 43l9 4M29 30l9 3"/>
+    </g>
+    <g class="cat-leg cat-leg--back-a"><path class="cat-leg-outline" d="M57 70Q61 79 55 87L51 94Q53 97 61 96"/><path class="cat-leg-fill" d="M57 70Q61 79 55 87L51 94Q53 97 61 96"/><path class="cat-leg-mark" d="M55 78l9 3m-12 5 8 3"/></g>
+    <g class="cat-leg cat-leg--back-b"><path class="cat-leg-outline" d="M73 70Q76 79 73 87L76 94Q80 97 87 95"/><path class="cat-leg-fill" d="M73 70Q76 79 73 87L76 94Q80 97 87 95"/><path class="cat-leg-mark" d="M70 78l9 3m-6 6 9 2"/></g>
+    <path class="cat-body" d="M43 57c4-15 17-23 39-23h22c17 0 27 10 30 25l-5 16H61c-11 0-18-7-18-18z"/>
+    <path class="cat-belly" d="M77 70c9 5 23 5 34 0l-3 7H79z"/>
+    <path class="cat-stripe" d="M54 48l13 5-8 10M74 37l12 9-10 8M95 36l11 10-9 7M112 42l9 9-8 4"/>
+    <path class="cat-fur-mark" d="M63 59l7 2m10 4 6 2m16-2 7 2"/>
+    <g class="cat-leg cat-leg--front-a"><path class="cat-leg-outline" d="M116 70Q113 79 117 87L120 93Q123 97 134 95"/><path class="cat-leg-fill" d="M116 70Q113 79 117 87L120 93Q123 97 134 95"/><path class="cat-leg-mark" d="M113 78l9 3m-6 6 8 2"/></g>
+    <g class="cat-leg cat-leg--front-b"><path class="cat-leg-outline" d="M130 70Q132 80 136 88L140 93Q144 97 154 95"/><path class="cat-leg-fill" d="M130 70Q132 80 136 88L140 93Q144 97 154 95"/><path class="cat-leg-mark" d="M128 78l9 3m-5 7 9 2"/></g>
+    <path class="cat-chest" d="M126 57c-5 6-8 12-8 20h20l-2-18z"/>
+    <path class="cat-head" d="M117 40l1-19 14 12c7-2 16 1 21 7l9 3-4 9c-1 10-9 17-22 17-13 0-22-8-22-19 0-4 1-7 3-10z"/>
+    <path class="cat-ear-inner" d="M122 27l7 7-8 1zM143 33l7-5 1 9z"/>
+    <path class="cat-face-stripe" d="M132 34l5 6-3 5m8-11 2 10m6-7-3 8"/>
+    <ellipse class="cat-muzzle" cx="150" cy="53" rx="8" ry="5"/>
+    <path class="cat-nose" d="M151 49l4 3-4 3-4-3z"/>
+    <ellipse class="cat-eye" cx="139" cy="46" rx="2.2" ry="3.2"/>
+    <ellipse class="cat-eye" cx="153" cy="46" rx="2.2" ry="3.2"/>
+    <path class="cat-mouth" d="M151 55v3m0 0-4 2m4-2 4 2"/>
+    <path class="cat-whisker" d="M145 55l-12-2m12 5-12 2m18-5 11-2m-11 5 11 2"/>
+  </svg>
+</div>
 
 <footer class="site-footer">
   <p><strong>Dice Tower Board Game Cafe</strong>, Golden Country Homes, Alanginan. Open Monday to Saturday 11:00 AM to 8:00 PM.</p>

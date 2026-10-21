@@ -675,7 +675,7 @@ address {
   }
 
   .site-nav.open {
-    max-height: 420px;
+    max-height: 520px;
     visibility: visible;
   }
 

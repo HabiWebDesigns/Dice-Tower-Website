@@ -12,7 +12,7 @@ const SITE_CONFIG = {
 
   // Reservation requests are sent to this email through FormSubmit (formsubmit.co).
   // The first request triggers an activation email from FormSubmit: click the link in it once.
-  RESERVATION_EMAIL: "cantosherbie@gmail.com",
+  RESERVATION_EMAIL: "dicetowerboardgamecafe@gmail.com",
 
   // ----- Order page (order.html). All optional: delete or leave as is to use the defaults. -----
   // Orders are emailed here through FormSubmit. If left empty, RESERVATION_EMAIL above is used.

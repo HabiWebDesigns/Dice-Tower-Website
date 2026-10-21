@@ -341,6 +341,43 @@ html.intro-active .page-intro {
   }
 }
 
+/* Fixed, click-through celebration layer: it never takes up space in the page layout. */
+.six-seven-overlay {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.six-seven-gif {
+  position: absolute;
+  display: block;
+  width: clamp(82px, 13vw, 175px);
+  max-width: 28vw;
+  height: auto;
+  border: 2px solid var(--parchment);
+  border-radius: 8px;
+  box-shadow: 0 5px 18px rgba(27, 18, 16, .5);
+  animation: six-seven-pop .35s cubic-bezier(.2, .8, .25, 1) both;
+}
+
+.six-seven-gif:nth-child(1) { top: 5%; left: 4%; --tilt: -10deg; }
+.six-seven-gif:nth-child(2) { top: 9%; right: 5%; --tilt: 9deg; animation-delay: .04s; }
+.six-seven-gif:nth-child(3) { top: 38%; left: 3%; --tilt: 7deg; animation-delay: .08s; }
+.six-seven-gif:nth-child(4) { top: 42%; right: 3%; --tilt: -8deg; animation-delay: .12s; }
+.six-seven-gif:nth-child(5) { bottom: 6%; left: 17%; --tilt: 8deg; animation-delay: .16s; }
+.six-seven-gif:nth-child(6) { right: 17%; bottom: 5%; --tilt: -9deg; animation-delay: .2s; }
+
+@keyframes six-seven-pop {
+  from { opacity: 0; transform: rotate(var(--tilt)) scale(.45); }
+  to { opacity: 1; transform: rotate(var(--tilt)) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .six-seven-gif { animation: none; }
+}
+
 .intro-cards {
   position: absolute;
   inset: 0;

@@ -17,12 +17,43 @@
   function resultRoll() {
     if (window.crypto && crypto.getRandomValues) {
       const a = new Uint32Array(1);
-      do { crypto.getRandomValues(a); } while (a[0] >= 4294967250); // largest multiple of 50 below 2^32
-      if (a[0] % 50 === 0) return 67;
-    } else if (Math.random() < 0.02) {
+      do { crypto.getRandomValues(a); } while (a[0] >= 4294967280); // divisible by 20 for an exact 5% chance
+      if (a[0] % 20 === 0) return 67;
+    } else if (Math.random() < 0.05) {
       return 67;
     }
     return d20();
+  }
+
+  let sixSevenTimer;
+  function showSixSevenGifs() {
+    document.getElementById("sixSevenOverlay")?.remove();
+    window.clearTimeout(sixSevenTimer);
+
+    const overlay = document.createElement("div");
+    overlay.id = "sixSevenOverlay";
+    overlay.className = "six-seven-overlay";
+    overlay.setAttribute("aria-hidden", "true");
+    const gifs = [
+      "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeW5zejVuejlsbW90emNrdDRxZzFudmcxcXM3d3BpbTdybzh0ZzlxdyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/AINeC40MaJRtVw4hZ3/giphy.gif",
+      "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeW5zejVuejlsbW90emNrdDRxZzFudmcxcXM3d3BpbTdybzh0ZzlxdyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/D2jYcCdYiiXriQdKcD/giphy.gif",
+      "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeW5zejVuejlsbW90emNrdDRxZzFudmcxcXM3d3BpbTdybzh0ZzlxdyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/8rN9VXNb7dfU792YQt/giphy.gif",
+      "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeW5zejVuejlsbW90emNrdDRxZzFudmcxcXM3d3BpbTdybzh0ZzlxdyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/TpvnqBFOE0tVrnGU1h/giphy.gif",
+      "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeW5zejVuejlsbW90emNrdDRxZzFudmcxcXM3d3BpbTdybzh0ZzlxdyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/6LkqKOn3RSfvBB5vSu/giphy.gif",
+      "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeW5zejVuejlsbW90emNrdDRxZzFudmcxcXM3d3BpbTdybzh0ZzlxdyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/V5huUSKSZEKcesHkXr/giphy.gif"
+    ];
+
+    gifs.forEach(gif => {
+      const image = document.createElement("img");
+      image.className = "six-seven-gif";
+      image.src = gif;
+      image.alt = "";
+      image.draggable = false;
+      overlay.appendChild(image);
+    });
+
+    document.body.appendChild(overlay);
+    sixSevenTimer = window.setTimeout(() => overlay.remove(), 10000);
   }
 
   function message(n) {
@@ -96,6 +127,7 @@
         const n = resultRoll();
         numEl.textContent = n;
         result.textContent = "You rolled a " + n + "! " + message(n);
+        if (n === 67) showSixSevenGifs();
         btn.classList.remove("rolling");
         if (n === 20) btn.classList.add("crit");
         if (n === 1) btn.classList.add("fail");

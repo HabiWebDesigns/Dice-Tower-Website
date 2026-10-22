@@ -1,258 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dice Tower Board Game Cafe | Golden Country Homes, Alanginan</title>
-  <meta name="description" content="Coffee, pastries, board games and Magic: The Gathering nights at Dice Tower Board Game Cafe. Open Monday to Saturday 11:00 AM to 8:00 PM.">
+  <meta name="description"
+    content="Coffee, pastries, board games and Magic: The Gathering nights at Dice Tower Board Game Cafe. Open Monday to Saturday 11:00 AM to 8:00 PM.">
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;700&family=Metamorphous&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;700&family=Metamorphous&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/dice.css?v=5">
-  <link rel="stylesheet" href="css/walking-cat.css">
 </head>
+
 <body>
 
-<a class="skip" href="#events">Skip to content</a>
+  <a class="skip" href="#events">Skip to content</a>
 
-<script>document.documentElement.classList.add("intro-active");</script>
-<div class="page-intro" id="pageIntro" aria-label="Dice Tower page intro">
-  <p class="intro-message" id="introMessage" aria-live="polite">Rolling for the perfect start...</p>
-  <div class="intro-die" id="introDie" aria-hidden="true">
-    <svg class="d20-svg" viewBox="0 0 200 200">
-      <polygon class="d20-body" points="100,8 180,54 180,146 100,192 20,146 20,54"/>
-      <polygon class="d20-face" points="100,36 152,134 48,134"/>
-      <path class="d20-edge" d="M100 8V36M20 54L100 36L180 54M48 134L20 54M48 134L20 146M48 134L100 192M152 134L180 54M152 134L180 146M152 134L100 192M48 134H152"/>
-      <text class="d20-num" x="100" y="100">20</text>
-    </svg>
+  <script>document.documentElement.classList.add("intro-active");</script>
+  <div class="page-intro" id="pageIntro" aria-label="Dice Tower page intro">
+    <p class="intro-message" id="introMessage" aria-live="polite">Rolling for the perfect start...</p>
+    <div class="intro-die" id="introDie" aria-hidden="true">
+      <svg class="d20-svg" viewBox="0 0 200 200">
+        <polygon class="d20-body" points="100,8 180,54 180,146 100,192 20,146 20,54" />
+        <polygon class="d20-face" points="100,36 152,134 48,134" />
+        <path class="d20-edge"
+          d="M100 8V36M20 54L100 36L180 54M48 134L20 54M48 134L20 146M48 134L100 192M152 134L180 54M152 134L180 146M152 134L100 192M48 134H152" />
+        <text class="d20-num" x="100" y="100">20</text>
+      </svg>
+    </div>
+    <div class="intro-cards" id="introCards" aria-hidden="true">
+      <div class="intro-card intro-card--ember">
+        <span class="intro-card-cost">1</span>
+        <span class="intro-card-art"></span>
+        <span class="intro-card-title">Ember Adept</span>
+        <span class="intro-card-type">Creature</span>
+        <span class="intro-card-copy">A spark can light the way.</span>
+        <span class="intro-card-power">2/2</span>
+      </div>
+      <div class="intro-card intro-card--grove">
+        <span class="intro-card-cost">2</span>
+        <span class="intro-card-art"></span>
+        <span class="intro-card-title">Grove Guardian</span>
+        <span class="intro-card-type">Creature</span>
+        <span class="intro-card-copy">The old trees remember.</span>
+        <span class="intro-card-power">3/3</span>
+      </div>
+      <div class="intro-card intro-card--arcane">
+        <span class="intro-card-cost">3</span>
+        <span class="intro-card-art"></span>
+        <span class="intro-card-title">Arcane Insight</span>
+        <span class="intro-card-type">Spell</span>
+        <span class="intro-card-copy">Every roll tells a story.</span>
+        <span class="intro-card-power">*/*</span>
+      </div>
+    </div>
+    <button class="intro-skip" id="introSkip" type="button">Skip intro</button>
   </div>
-  <div class="intro-cards" id="introCards" aria-hidden="true">
-    <div class="intro-card intro-card--ember">
-      <span class="intro-card-cost">1</span>
-      <span class="intro-card-art"></span>
-      <span class="intro-card-title">Ember Adept</span>
-      <span class="intro-card-type">Creature</span>
-      <span class="intro-card-copy">A spark can light the way.</span>
-      <span class="intro-card-power">2/2</span>
-    </div>
-    <div class="intro-card intro-card--grove">
-      <span class="intro-card-cost">2</span>
-      <span class="intro-card-art"></span>
-      <span class="intro-card-title">Grove Guardian</span>
-      <span class="intro-card-type">Creature</span>
-      <span class="intro-card-copy">The old trees remember.</span>
-      <span class="intro-card-power">3/3</span>
-    </div>
-    <div class="intro-card intro-card--arcane">
-      <span class="intro-card-cost">3</span>
-      <span class="intro-card-art"></span>
-      <span class="intro-card-title">Arcane Insight</span>
-      <span class="intro-card-type">Spell</span>
-      <span class="intro-card-copy">Every roll tells a story.</span>
-      <span class="intro-card-power">*/*</span>
-    </div>
-  </div>
-  <button class="intro-skip" id="introSkip" type="button">Skip intro</button>
-</div>
 
-<header class="site-header">
-  <a class="brand" href="#home" aria-label="Dice Tower, back to top">
-    <img src="images/logo-wordmark.png" alt="Dice Tower" width="700" height="109">
-  </a>
-  <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
-    <span></span><span></span><span></span>
-  </button>
-  <nav id="site-nav" class="site-nav">
-    <a href="order.html">Menu</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="activities.html">Interactive Activities</a>
-    <a href="#events">Events</a>
-    <a href="#about">About</a>
-    <a href="#visit">Visit</a>
-    <a class="nav-cta" href="#reserve">Reserve a table</a>
-  </nav>
-</header>
-
-<main>
-
-<!-- HERO -->
-<section id="home" class="hero">
-  <div class="hero-text">
-    <h1>Coffee, cards, and quests await.</h1>
-    <p class="lede">A board game cafe with a local game store feel in Golden Country Homes, Alanginan. Grab a latte, claim a table, and play Magic, Dungeons and Dragons, or anything off our shelf.</p>
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="order.html">Explore the menu</a>
-      <a class="btn btn-ghost" href="#reserve">Reserve a table</a>
-    </div>
-  </div>
-  <div class="hero-art">
-    <img src="images/logo.png" width="847" height="1000"
-         alt="Dice Tower logo: a red dragon curled around a stone tower, serving a burger on a platter">
-    <p class="open-status" id="openStatus" aria-live="polite">Open Monday to Saturday, 11:00 AM to 8:00 PM</p>
-  </div>
-</section>
-
-<!-- EVENTS -->
-<section id="events" class="section section-dark">
-  <div class="section-head">
-    <h2>Events board</h2>
-    <p>Sign up at the counter or reserve a table below. Seats fill up fast on tournament nights.</p>
-  </div>
-  <div id="eventsStatus" class="status-note" aria-live="polite">Loading events...</div>
-  <div class="quest-board">
-    <ul id="eventsList" class="events"></ul>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about" class="section about">
-  <div class="about-copy">
-    <h2>About Dice Tower</h2>
-    <p>We started Dice Tower for the students and card players who never had a comfortable place to play. Good coffee, big tables, and a shelf of games you can borrow for the afternoon.</p>
-    <p>New to tabletop games? Ask at the counter and we will teach you a game in ten minutes. Already have a deck? Bring it. Singles, sleeves and playmats are on the shelf by the door.</p>
-  </div>
-  <ul class="about-facts">
-    <li><strong>Magic: The Gathering</strong> and other TCGs, played here every week</li>
-    <li><strong>Board game library</strong> free to play with any order</li>
-    <li><strong>Student friendly</strong> prices and long, quiet afternoons</li>
-  </ul>
-</section>
-
-<!-- VISIT -->
-<section id="visit" class="section visit">
-  <div class="visit-info">
-    <h2>Find us</h2>
-    <address>Golden Country Homes<br>Alanginan</address>
-    <table class="hours">
-      <caption class="visually-hidden">Opening hours</caption>
-      <tr><th scope="row">Monday</th><td>11:00 AM to 8:00 PM</td></tr>
-      <tr><th scope="row">Tuesday</th><td>11:00 AM to 8:00 PM</td></tr>
-      <tr><th scope="row">Wednesday</th><td>11:00 AM to 8:00 PM</td></tr>
-      <tr><th scope="row">Thursday</th><td>11:00 AM to 8:00 PM</td></tr>
-      <tr><th scope="row">Friday</th><td>11:00 AM to 8:00 PM</td></tr>
-      <tr><th scope="row">Saturday</th><td>11:00 AM to 8:00 PM</td></tr>
-      <tr><th scope="row">Sunday</th><td>Closed</td></tr>
-    </table>
-    <a class="btn btn-ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Golden+Country+Homes+Alanginan">Open in Google Maps</a>
-  </div>
-  <div class="map-frame">
-    <iframe title="Map showing Golden Country Homes, Alanginan" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4873.875512984858!2d121.07132687600064!3d13.785962386609494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd0fa6397ee605%3A0xbcc55e338edc14ad!2sDice%20Tower%20Board%20Game%20Cafe!5e1!3m2!1sen!2sph!4v1792297805161!5m2!1sen!2sph"></iframe>
-  </div>
-</section>
-
-<!-- RESERVE -->
-<section id="reserve" class="section reserve">
-  <div class="section-head">
-    <h2>Reserve a table</h2>
-    <p>Tell us when you are coming and how many players. We will confirm by email or phone.</p>
-  </div>
-  <form id="reserveForm" class="form" novalidate>
-    <input type="text" name="_honey" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <div class="field">
-      <label for="name">Your name</label>
-      <input id="name" name="name" type="text" autocomplete="name" required>
-      <p class="error" id="nameError"></p>
-    </div>
-    <div class="field">
-      <label for="email">Email</label>
-      <input id="email" name="email" type="email" autocomplete="email" required>
-      <p class="error" id="emailError"></p>
-    </div>
-    <div class="field">
-      <label for="phone">Mobile number <span class="optional">(optional)</span></label>
-      <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="0917 123 4567">
-      <p class="error" id="phoneError"></p>
-    </div>
-    <div class="field">
-      <label for="guests">Players</label>
-      <input id="guests" name="guests" type="number" min="1" max="12" value="2" required>
-      <p class="error" id="guestsError"></p>
-    </div>
-    <div class="field">
-      <label for="date">Date</label>
-      <input id="date" name="date" type="date" required>
-      <p class="error" id="dateError"></p>
-    </div>
-    <div class="field">
-      <label for="time">Time <span class="optional">(11:00 AM to 7:30 PM)</span></label>
-      <input id="time" name="time" type="time" min="11:00" max="19:30" required>
-      <p class="error" id="timeError"></p>
-    </div>
-    <div class="field field-wide">
-      <label for="notes">What are you playing? <span class="optional">(optional)</span></label>
-      <textarea id="notes" name="notes" rows="3" placeholder="Commander pod, D&amp;D one-shot, studying..."></textarea>
-    </div>
-    <div class="field-wide">
-      <button class="btn btn-primary" type="submit">Send reservation request</button>
-      <p id="formStatus" class="form-status" aria-live="polite"></p>
-    </div>
-  </form>
-</section>
-
-</main>
-
-<aside class="d20-widget" aria-label="D20 dice roller">
-  <div class="d20-widget-bubble" id="d20WidgetBubble">
-    <p class="d20-widget-text" id="d20WidgetText" aria-live="polite">Tap for a roll!</p>
-    <button class="d20-widget-close" id="d20WidgetClose" type="button" aria-label="Close D20 speech bubble">&times;</button>
-  </div>
-  <button class="d20-widget-btn" id="d20WidgetBtn" type="button" aria-label="Roll the D20">
-    <svg class="d20-svg" id="d20WidgetSvg" viewBox="0 0 200 200" aria-hidden="true">
-      <polygon class="d20-body" points="100,8 180,54 180,146 100,192 20,146 20,54"/>
-      <polygon class="d20-face" points="100,36 152,134 48,134"/>
-      <path class="d20-edge" d="M100 8V36M20 54L100 36L180 54M48 134L20 54M48 134L20 146M48 134L100 192M152 134L180 54M152 134L180 146M152 134L100 192M48 134H152"/>
-      <text class="d20-num" id="d20WidgetNum" x="100" y="100">20</text>
-    </svg>
-  </button>
-</aside>
-
-<div class="walking-cat" aria-hidden="true">
-  <svg class="walking-cat-svg" viewBox="0 0 180 110" role="presentation">
-    <g class="cat-tail">
-      <path class="cat-tail-base" d="M47 61C25 57 19 43 25 28C29 18 40 17 45 25"/>
-      <path class="cat-stripe cat-tail-stripe" d="M25 43l9 4M29 30l9 3"/>
-    </g>
-    <g class="cat-leg cat-leg--back-a"><path class="cat-leg-outline" d="M57 70Q61 79 55 87L51 94Q53 97 61 96"/><path class="cat-leg-fill" d="M57 70Q61 79 55 87L51 94Q53 97 61 96"/><path class="cat-leg-mark" d="M55 78l9 3m-12 5 8 3"/></g>
-    <g class="cat-leg cat-leg--back-b"><path class="cat-leg-outline" d="M73 70Q76 79 73 87L76 94Q80 97 87 95"/><path class="cat-leg-fill" d="M73 70Q76 79 73 87L76 94Q80 97 87 95"/><path class="cat-leg-mark" d="M70 78l9 3m-6 6 9 2"/></g>
-    <path class="cat-body" d="M43 57c4-15 17-23 39-23h22c17 0 27 10 30 25l-5 16H61c-11 0-18-7-18-18z"/>
-    <path class="cat-belly" d="M77 70c9 5 23 5 34 0l-3 7H79z"/>
-    <path class="cat-stripe" d="M54 48l13 5-8 10M74 37l12 9-10 8M95 36l11 10-9 7M112 42l9 9-8 4"/>
-    <path class="cat-fur-mark" d="M63 59l7 2m10 4 6 2m16-2 7 2"/>
-    <g class="cat-leg cat-leg--front-a"><path class="cat-leg-outline" d="M116 70Q113 79 117 87L120 93Q123 97 134 95"/><path class="cat-leg-fill" d="M116 70Q113 79 117 87L120 93Q123 97 134 95"/><path class="cat-leg-mark" d="M113 78l9 3m-6 6 8 2"/></g>
-    <g class="cat-leg cat-leg--front-b"><path class="cat-leg-outline" d="M130 70Q132 80 136 88L140 93Q144 97 154 95"/><path class="cat-leg-fill" d="M130 70Q132 80 136 88L140 93Q144 97 154 95"/><path class="cat-leg-mark" d="M128 78l9 3m-5 7 9 2"/></g>
-    <path class="cat-chest" d="M126 57c-5 6-8 12-8 20h20l-2-18z"/>
-    <path class="cat-head" d="M117 40l1-19 14 12c7-2 16 1 21 7l9 3-4 9c-1 10-9 17-22 17-13 0-22-8-22-19 0-4 1-7 3-10z"/>
-    <path class="cat-ear-inner" d="M122 27l7 7-8 1zM143 33l7-5 1 9z"/>
-    <path class="cat-face-stripe" d="M132 34l5 6-3 5m8-11 2 10m6-7-3 8"/>
-    <ellipse class="cat-muzzle" cx="150" cy="53" rx="8" ry="5"/>
-    <path class="cat-nose" d="M151 49l4 3-4 3-4-3z"/>
-    <ellipse class="cat-eye" cx="139" cy="46" rx="2.2" ry="3.2"/>
-    <ellipse class="cat-eye" cx="153" cy="46" rx="2.2" ry="3.2"/>
-    <path class="cat-mouth" d="M151 55v3m0 0-4 2m4-2 4 2"/>
-    <path class="cat-whisker" d="M145 55l-12-2m12 5-12 2m18-5 11-2m-11 5 11 2"/>
-  </svg>
-</div>
-
-<footer class="site-footer">
-  <p><strong>Dice Tower Board Game Cafe</strong>, Golden Country Homes, Alanginan. Open Monday to Saturday 11:00 AM to 8:00 PM.</p>
-  <nav class="footer-links" aria-label="Social media and contact">
-    <a href="https://www.facebook.com/dicetowerboardgamecafe" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.4 21v-7.2h2.4l.4-2.8h-2.8V9.2c0-.8.3-1.3 1.4-1.3h1.5V5.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8V11H8v2.8h2.4V21z"/></svg>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="Dice Tower, back to top">
+      <img src="images/logo-wordmark.png" alt="Dice Tower" width="700" height="109">
     </a>
-    <a href="https://www.instagram.com/dicetowerboardgamecafeph" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="icon-dot" cx="17.5" cy="6.8" r="1"/></svg>
-    </a>
-    <a href="mailto:dicetowerboardgamecafe@gmail.com" aria-label="Email Dice Tower" title="Email Dice Tower">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path class="gmail-mark" d="m3.5 6 8.5 7 8.5-7"/></svg>
-    </a>
-  </nav>
-</footer>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="site-nav" class="site-nav">
+      <a href="order.html">Menu</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="activities.html">Interactive Activities</a>
+      <a href="#events">Events</a>
+      <a href="#about">About</a>
+      <a href="#visit">Visit</a>
+      <a class="nav-cta" href="#reserve">Reserve a table</a>
+    </nav>
+  </header>
 
-<script src="js/config.js?v=3"></script>
-<script src="js/script.js?v=3"></script>
-<script src="js/dice.js?v=7"></script>
+  <main>
+
+    <!-- HERO -->
+    <section id="home" class="hero">
+      <div class="hero-text">
+        <h1>Coffee, cards, and quests await.</h1>
+        <p class="lede">A board game cafe with a local game store feel in Golden Country Homes, Alanginan. Grab a latte,
+          claim a table, and play Magic, Dungeons and Dragons, or anything off our shelf.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="order.html">Explore the menu</a>
+          <a class="btn btn-ghost" href="#reserve">Reserve a table</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <img src="images/logo.png" width="847" height="1000"
+          alt="Dice Tower logo: a red dragon curled around a stone tower, serving a burger on a platter">
+        <p class="open-status" id="openStatus" aria-live="polite">Open Monday to Saturday, 11:00 AM to 8:00 PM</p>
+      </div>
+    </section>
+
+    <!-- EVENTS -->
+    <section id="events" class="section section-dark">
+      <div class="section-head">
+        <h2>Events board</h2>
+        <p>Sign up at the counter or reserve a table below. Seats fill up fast on tournament nights.</p>
+      </div>
+      <div id="eventsStatus" class="status-note" aria-live="polite">Loading events...</div>
+      <div class="quest-board">
+        <ul id="eventsList" class="events"></ul>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section about">
+      <div class="about-copy">
+        <h2>About Dice Tower</h2>
+        <p>We started Dice Tower for the students and card players who never had a comfortable place to play. Good
+          coffee, big tables, and a shelf of games you can borrow for the afternoon.</p>
+        <p>New to tabletop games? Ask at the counter and we will teach you a game in ten minutes. Already have a deck?
+          Bring it. Singles, sleeves and playmats are on the shelf by the door.</p>
+      </div>
+      <ul class="about-facts">
+        <li><strong>Magic: The Gathering</strong> and other TCGs, played here every week</li>
+        <li><strong>Board game library</strong> free to play with any order</li>
+        <li><strong>Student friendly</strong> prices and long, quiet afternoons</li>
+      </ul>
+    </section>
+
+    <!-- VISIT -->
+    <section id="visit" class="section visit">
+      <div class="visit-info">
+        <h2>Find us</h2>
+        <address>Golden Country Homes<br>Alanginan</address>
+        <table class="hours">
+          <caption class="visually-hidden">Opening hours</caption>
+          <tr>
+            <th scope="row">Monday</th>
+            <td>11:00 AM to 8:00 PM</td>
+          </tr>
+          <tr>
+            <th scope="row">Tuesday</th>
+            <td>11:00 AM to 8:00 PM</td>
+          </tr>
+          <tr>
+            <th scope="row">Wednesday</th>
+            <td>11:00 AM to 8:00 PM</td>
+          </tr>
+          <tr>
+            <th scope="row">Thursday</th>
+            <td>11:00 AM to 8:00 PM</td>
+          </tr>
+          <tr>
+            <th scope="row">Friday</th>
+            <td>11:00 AM to 8:00 PM</td>
+          </tr>
+          <tr>
+            <th scope="row">Saturday</th>
+            <td>11:00 AM to 8:00 PM</td>
+          </tr>
+          <tr>
+            <th scope="row">Sunday</th>
+            <td>Closed</td>
+          </tr>
+        </table>
+        <a class="btn btn-ghost" target="_blank" rel="noopener"
+          href="https://www.google.com/maps/search/?api=1&query=Golden+Country+Homes+Alanginan">Open in Google Maps</a>
+      </div>
+      <div class="map-frame">
+        <iframe title="Map showing Golden Country Homes, Alanginan" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4873.875512984858!2d121.07132687600064!3d13.785962386609494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd0fa6397ee605%3A0xbcc55e338edc14ad!2sDice%20Tower%20Board%20Game%20Cafe!5e1!3m2!1sen!2sph!4v1792297805161!5m2!1sen!2sph"></iframe>
+      </div>
+    </section>
+
+    <!-- RESERVE -->
+    <section id="reserve" class="section reserve">
+      <div class="section-head">
+        <h2>Reserve a table</h2>
+        <p>Tell us when you are coming and how many players. We will confirm by email or phone.</p>
+      </div>
+      <form id="reserveForm" class="form" novalidate>
+        <input type="text" name="_honey" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="field">
+          <label for="name">Your name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required>
+          <p class="error" id="nameError"></p>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+          <p class="error" id="emailError"></p>
+        </div>
+        <div class="field">
+          <label for="phone">Mobile number <span class="optional">(optional)</span></label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="0917 123 4567">
+          <p class="error" id="phoneError"></p>
+        </div>
+        <div class="field">
+          <label for="guests">Players</label>
+          <input id="guests" name="guests" type="number" min="1" max="12" value="2" required>
+          <p class="error" id="guestsError"></p>
+        </div>
+        <div class="field">
+          <label for="date">Date</label>
+          <input id="date" name="date" type="date" required>
+          <p class="error" id="dateError"></p>
+        </div>
+        <div class="field">
+          <label for="time">Time <span class="optional">(11:00 AM to 7:30 PM)</span></label>
+          <input id="time" name="time" type="time" min="11:00" max="19:30" required>
+          <p class="error" id="timeError"></p>
+        </div>
+        <div class="field field-wide">
+          <label for="notes">What are you playing? <span class="optional">(optional)</span></label>
+          <textarea id="notes" name="notes" rows="3"
+            placeholder="Commander pod, D&amp;D one-shot, studying..."></textarea>
+        </div>
+        <div class="field-wide">
+          <button class="btn btn-primary" type="submit">Send reservation request</button>
+          <p id="formStatus" class="form-status" aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+
+  </main>
+
+  <aside class="d20-widget" aria-label="D20 dice roller">
+    <div class="d20-widget-bubble" id="d20WidgetBubble">
+      <p class="d20-widget-text" id="d20WidgetText" aria-live="polite">Tap for a roll!</p>
+      <button class="d20-widget-close" id="d20WidgetClose" type="button"
+        aria-label="Close D20 speech bubble">&times;</button>
+    </div>
+    <button class="d20-widget-btn" id="d20WidgetBtn" type="button" aria-label="Roll the D20">
+      <svg class="d20-svg" id="d20WidgetSvg" viewBox="0 0 200 200" aria-hidden="true">
+        <polygon class="d20-body" points="100,8 180,54 180,146 100,192 20,146 20,54" />
+        <polygon class="d20-face" points="100,36 152,134 48,134" />
+        <path class="d20-edge"
+          d="M100 8V36M20 54L100 36L180 54M48 134L20 54M48 134L20 146M48 134L100 192M152 134L180 54M152 134L180 146M152 134L100 192M48 134H152" />
+        <text class="d20-num" id="d20WidgetNum" x="100" y="100">20</text>
+      </svg>
+    </button>
+  </aside>
+
+  <footer class="site-footer">
+    <p><strong>Dice Tower Board Game Cafe</strong>, Golden Country Homes, Alanginan. Open Monday to Saturday 11:00 AM to
+      8:00 PM.</p>
+    <nav class="footer-links" aria-label="Social media and contact">
+      <a href="https://www.facebook.com/dicetowerboardgamecafe" target="_blank" rel="noopener noreferrer"
+        aria-label="Facebook" title="Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M13.4 21v-7.2h2.4l.4-2.8h-2.8V9.2c0-.8.3-1.3 1.4-1.3h1.5V5.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8V11H8v2.8h2.4V21z" />
+        </svg>
+      </a>
+      <a href="https://www.instagram.com/dicetowerboardgamecafeph" target="_blank" rel="noopener noreferrer"
+        aria-label="Instagram" title="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5" />
+          <circle cx="12" cy="12" r="4" />
+          <circle class="icon-dot" cx="17.5" cy="6.8" r="1" />
+        </svg>
+      </a>
+      <a href="mailto:dicetowerboardgamecafe@gmail.com" aria-label="Email Dice Tower" title="Email Dice Tower">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="2.5" y="4.5" width="19" height="15" rx="2" />
+          <path class="gmail-mark" d="m3.5 6 8.5 7 8.5-7" />
+        </svg>
+      </a>
+    </nav>
+  </footer>
+
+  <script src="js/config.js?v=3"></script>
+  <script src="js/script.js?v=3"></script>
+  <script src="js/dice.js?v=7"></script>
 </body>
+
 </html>

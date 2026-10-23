@@ -31,6 +31,86 @@
 .player-card { --player: #d8bd78; position: relative; isolation: isolate; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; min-height: 0; overflow: hidden; padding: clamp(.7rem, 1.7vw, 1.25rem); border: 1px solid color-mix(in srgb, var(--player), transparent 55%); border-radius: 20px; background: linear-gradient(145deg, color-mix(in srgb, var(--player), #252a26 90%), #202521 52%, #1c211e); box-shadow: 0 12px 32px #080a08aa, inset 0 1px 0 #ffffff0b; }
 .player-card::before { position: absolute; z-index: -1; inset: 0 0 auto; height: 3px; background: var(--player); content: ""; box-shadow: 0 0 20px color-mix(in srgb, var(--player), transparent 45%); }
 .player-card.is-defeated { filter: saturate(.35); opacity: .58; }
+.player-effect {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: clamp(.45rem, 2vw, 1rem);
+  background: rgb(20 10 7 / 62%);
+  pointer-events: none;
+  animation: player-effect-in .2s ease-out both;
+}
+.player-effect-media {
+  display: block;
+  width: min(88%, 340px);
+  height: min(78%, 230px);
+  border: 2px ridge #d8ad69;
+  border-radius: 8px;
+  background: #1b120e;
+  object-fit: contain;
+  box-shadow: 0 10px 30px #000c, 0 0 20px rgb(231 184 107 / 22%);
+}
+iframe.player-effect-media { aspect-ratio: 4 / 3; }
+.game-announcement {
+  position: fixed;
+  z-index: 2147483000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgb(18 10 7 / 76%);
+  pointer-events: none;
+  animation: player-effect-in .2s ease-out both;
+}
+.game-announcement-panel {
+  display: grid;
+  justify-items: center;
+  gap: .8rem;
+  width: min(760px, 92vw);
+  padding: clamp(.65rem, 2vw, 1.2rem);
+  border: 3px ridge #b2824c;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #55351f, #2b1b13 70%);
+  box-shadow: 0 24px 90px #000d, inset 0 0 0 3px rgb(255 229 186 / 5%);
+}
+.game-announcement-media {
+  display: block;
+  width: 100%;
+  max-height: min(58vh, 520px);
+  border: 1px solid rgb(235 200 147 / 55%);
+  border-radius: 6px;
+  background: #170f0b;
+  object-fit: contain;
+  box-shadow: 0 8px 28px #0009;
+}
+.game-announcement-title {
+  margin: 0;
+  color: #f4d28e;
+  font: 700 clamp(1.4rem, 4vw, 2.7rem) var(--font-display, Georgia, serif);
+  text-align: center;
+  text-shadow: 0 2px 10px #000a;
+}
+.game-announcement-actions { display: flex; justify-content: center; }
+.game-announcement-close {
+  min-height: 42px;
+  padding: .55rem 1.15rem;
+  border: 1px solid #d3a75f;
+  border-radius: 5px;
+  background: linear-gradient(180deg, #a94026, #732519);
+  color: #fff1dc;
+  font: 700 .9rem var(--font-body, sans-serif);
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: inset 0 1px rgb(255 255 255 / 14%), 0 3px 0 #44170f;
+}
+.game-announcement-close:hover { background: linear-gradient(180deg, #c34c2b, #8a2d1e); }
+@keyframes player-effect-in {
+  from { opacity: 0; transform: scale(.96); }
+  to { opacity: 1; transform: scale(1); }
+}
 .player-heading { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
 .player-name { width: min(65%, 220px); min-width: 0; padding: .25rem 0; border: 0; border-bottom: 1px solid transparent; outline: 0; background: transparent; color: var(--counter-ink); font: 700 clamp(.88rem, 2vw, 1.1rem) var(--font-body); }
 .player-name:focus { border-color: var(--player); }
@@ -41,10 +121,6 @@
 .life-button:active { transform: scale(.94); background: color-mix(in srgb, var(--player), #202521 76%); }
 .player-tools { display: flex; align-items: center; justify-content: center; gap: .5rem; }
 .counter-tool { min-height: 34px; padding: .35rem .7rem; border: 1px solid var(--counter-line); border-radius: 999px; background: #171b18aa; color: var(--counter-muted); font: 500 .78rem var(--font-body); cursor: pointer; }
-.energy-tool { display: inline-flex; align-items: center; justify-content: center; gap: .35rem; }
-.energy-symbol { width: 15px; height: 17px; overflow: visible; }
-.energy-token { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linejoin: round; }
-.energy-bolt { fill: #e8c85e; stroke: #e8c85e; stroke-linejoin: round; }
 .counter-tool:hover { border-color: var(--player); color: var(--counter-ink); }
 .table-hint { position: absolute; bottom: .15rem; margin: 0; color: #96998f; font-size: .72rem; text-align: center; }
 .counter-footer { min-height: 40px; border-top: 1px solid var(--counter-line); color: var(--counter-muted); font-size: .8rem; }
@@ -61,6 +137,11 @@
 .start-game { min-height: 48px; margin-top: .55rem; border: 0; border-radius: 8px; background: #d8bd78; color: #211d12; font: 700 1rem var(--font-body); cursor: pointer; }
 .settings-note { margin: .15rem 0 0; color: #989b92; font-size: .75rem; text-align: center; }
 .counter-dialog h2 { font-size: 1.25rem; }
+.counter-dialog { overflow-y: auto; }
+.counter-group-title { margin: .9rem 0 .1rem; color: #d8bd78; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; }
+.commander-rule { margin: .8rem 0 0; color: var(--counter-muted); font-size: .72rem; }
+.commander-tool { color: #e3c582; }
+.commander-counter strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .extra-counter { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: .65rem; padding: .7rem 0; border-top: 1px solid var(--counter-line); }
 .extra-counter strong { font-size: .9rem; }
 .extra-counter output { min-width: 2rem; color: #e3c582; font-size: 1.1rem; font-variant-numeric: tabular-nums; text-align: center; }
@@ -134,4 +215,121 @@
   .life-total { font-size: clamp(3rem, 11vh, 5.5rem); }
   .life-button { width: 42px; height: 42px; }
   .table-hint { display: none; }
+}
+
+/* Dice Tower tavern palette */
+.counter-page {
+  --counter-ink: #f8ead5;
+  --counter-muted: #c8ad8d;
+  --counter-line: rgb(229 186 119 / 28%);
+  background-color: #21140f;
+  background-image:
+    radial-gradient(ellipse at 50% 45%, rgb(128 67 35 / 26%), transparent 55rem),
+    repeating-linear-gradient(90deg, #2d1d14 0 118px, #1d130e 119px 124px, #372419 125px 239px, #1d130e 240px 246px);
+}
+
+.counter-app { max-width: 1600px; margin-inline: auto; }
+.counter-toolbar { border-bottom-color: var(--counter-line); }
+.counter-back { color: var(--counter-muted); }
+.counter-back:hover { color: #fff2dc; }
+.counter-brand { color: #f2dcc0; text-shadow: 0 2px 10px #0008; }
+.tool-button,
+.dialog-close { border-color: #9a693c; background: linear-gradient(145deg, #5a3822, #352116); color: #f8ead5; box-shadow: inset 0 1px rgb(255 255 255 / 9%), 0 3px 8px #10090570; }
+.tool-button:hover,
+.dialog-close:hover { border-color: #e0b66c; background: linear-gradient(145deg, #744628, #49291a); }
+
+.counter-table {
+  margin: .55rem 0;
+  padding: clamp(.8rem, 2vw, 1.3rem);
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 48%, rgb(112 60 34 / 25%), transparent 70%),
+    linear-gradient(135deg, rgb(255 221 167 / 3%), transparent 60%);
+  border: 1px solid rgb(181 129 70 / 28%);
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 5px rgb(232 192 128 / 3%), inset 0 0 45px #10090555;
+}
+
+.table-glow { background: radial-gradient(circle, rgb(158 91 49 / 26%), rgb(97 55 33 / 12%) 48%, transparent 72%); }
+.player-grid { max-height: 840px; }
+.player-card {
+  border-color: color-mix(in srgb, var(--player), transparent 35%);
+  border-radius: 9px;
+  background:
+    linear-gradient(145deg, rgb(255 244 221 / 4%), transparent 40%),
+    repeating-linear-gradient(0deg, transparent 0 54px, rgb(10 6 4 / 10%) 55px 56px),
+    linear-gradient(145deg, #4b3020, #2b1c14 64%, #21160f);
+  box-shadow: 0 12px 30px #10090599, inset 0 0 0 1px rgb(255 240 215 / 5%);
+}
+
+.player-card::before { height: 4px; box-shadow: 0 0 15px color-mix(in srgb, var(--player), transparent 30%); }
+.player-name { color: #fff0d7; }
+.player-name:focus { border-color: #e0b66c; }
+.player-tag { color: #cfb391; }
+.life-total {
+  color: var(--player);
+  font-family: var(--font-display, Georgia, serif);
+  text-shadow: 0 4px 24px color-mix(in srgb, var(--player), transparent 66%);
+}
+.life-button {
+  border-color: color-mix(in srgb, var(--player), transparent 30%);
+  background: linear-gradient(145deg, color-mix(in srgb, var(--player), #352116 74%), #2a1a12);
+  color: #fff0d7;
+  box-shadow: inset 0 1px rgb(255 255 255 / 12%), 0 3px 8px #10090580;
+}
+.life-button:active { background: color-mix(in srgb, var(--player), #352116 55%); }
+.player-tools { gap: .4rem; }
+.counter-tool {
+  border-color: rgb(229 186 119 / 36%);
+  background: linear-gradient(180deg, rgb(99 63 38 / 90%), rgb(52 33 22 / 93%));
+  color: #e5c9a4;
+  box-shadow: inset 0 1px rgb(255 255 255 / 8%);
+}
+.counter-tool:hover { border-color: #e0b66c; color: #fff0d7; background: #6b3b24; }
+.commander-tool { color: #f0c578; }
+.table-hint { color: #c8ad8d; }
+.counter-footer { border-top-color: var(--counter-line); color: #c8ad8d; }
+.counter-footer button { color: #f0c578; }
+.counter-footer button:hover { color: #fff1d6; }
+
+.settings-dialog,
+.counter-dialog {
+  border: 3px ridge #9a693c;
+  border-radius: 7px;
+  background:
+    linear-gradient(145deg, rgb(255 255 255 / 45%), transparent 50%),
+    repeating-linear-gradient(0deg, transparent 0 42px, rgb(109 74 43 / 5%) 43px 44px),
+    #f2dcc0;
+  color: #2d1710;
+  box-shadow: 0 24px 90px #000c, inset 0 0 0 4px rgb(154 105 60 / 9%);
+}
+.settings-dialog::backdrop,
+.counter-dialog::backdrop { background: rgb(20 11 7 / 78%); backdrop-filter: blur(5px); }
+.settings-kicker { color: #8f2a1d; }
+.dialog-heading h1,
+.dialog-heading h2 { color: #2d1710; }
+.settings-dialog label { color: #5c4531; }
+.settings-dialog select { border-color: #ab8054; border-radius: 4px; background: #fffaf3; color: #2d1710; }
+.start-game { border: 1px solid #76301f; border-radius: 4px; background: linear-gradient(180deg, #b33e25, #7f271b); color: #fff3df; box-shadow: 0 3px 0 #4b1d14; }
+.start-game:hover { background: linear-gradient(180deg, #ca4e2d, #96301f); }
+.settings-note { color: #765d45; }
+.counter-group-title { color: #8f2a1d; }
+.commander-rule { color: #765d45; }
+.extra-counter { border-top-color: rgb(109 74 43 / 21%); }
+.extra-counter output { color: #8f2a1d; }
+.extra-counter button { border-color: #ab8054; background: #fff3df; color: #5a2b1d; }
+.extra-counter button:hover:not(:disabled) { background: #ead0a8; }
+.extra-counter button:disabled { opacity: .45; cursor: not-allowed; }
+
+@media (max-width: 650px) {
+  .counter-table { margin-block: .3rem; padding: .55rem; border-radius: 8px; }
+  .player-tools { gap: .3rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool-button,
+  .dialog-close,
+  .life-button,
+  .counter-tool { transition: none; }
+  .player-effect { animation: none; }
 }

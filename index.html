@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/dice.css?v=5">
   <link rel="stylesheet" href="css/tcg-gallery.css?v=11">
+  <link rel="stylesheet" href="css/about-visit.css?v=2">
 </head>
 
 <body>
@@ -181,64 +182,81 @@
     </section>
 
     <!-- ABOUT -->
-    <section id="about" class="section about">
+    <section id="about" class="section about about-tavern">
       <div class="about-copy">
-        <h2>About Dice Tower</h2>
+        <p class="place-kicker">A seat at the table</p>
+        <h2>Pull up a chair.</h2>
         <p>We started Dice Tower for the students and card players who never had a comfortable place to play. Good
           coffee, big tables, and a shelf of games you can borrow for the afternoon.</p>
         <p>New to tabletop games? Ask at the counter and we will teach you a game in ten minutes. Already have a deck?
           Bring it. Singles, sleeves and playmats are on the shelf by the door.</p>
+        <a class="about-invite" href="#visit">Find your way to the tavern <span aria-hidden="true">↗</span></a>
+        <span class="about-seal" aria-hidden="true">D20</span>
       </div>
-      <ul class="about-facts">
-        <li><strong>Magic: The Gathering</strong> and other TCGs, played here every week</li>
-        <li><strong>Board game library</strong> free to play with any order</li>
-        <li><strong>Student friendly</strong> prices and long, quiet afternoons</li>
+      <ul class="about-facts" aria-label="What you will find at Dice Tower">
+        <li><span class="fact-index" aria-hidden="true">01</span><div><strong>Weekly TCG play</strong><span>Magic: The Gathering and other TCGs, played here every week.</span></div></li>
+        <li><span class="fact-index" aria-hidden="true">02</span><div><strong>Games on the shelf</strong><span>Our board game library is free to play with any order.</span></div></li>
+        <li><span class="fact-index" aria-hidden="true">03</span><div><strong>A table for everyone</strong><span>Student friendly prices and long, quiet afternoons.</span></div></li>
       </ul>
     </section>
 
     <!-- VISIT -->
-    <section id="visit" class="section visit">
+    <section id="visit" class="section visit visit-tavern">
+      <div class="visit-heading">
+        <p class="place-kicker">Chart a course</p>
+        <h2>Find your way to the tower.</h2>
+        <p>Good games and a warm welcome are waiting in Alanginan.</p>
+      </div>
+      <div class="visit-layout">
       <div class="visit-info">
-        <h2>Find us</h2>
-        <address>Golden Country Homes<br>Alanginan</address>
+        <div class="visit-location">
+          <span class="location-emblem" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.4"/></svg></span>
+          <div><span class="detail-label">Our location</span><address>Golden Country Homes<br>Alanginan</address></div>
+        </div>
+        <div class="hours-heading"><h3>Opening hours</h3><span>Monday – Saturday</span></div>
         <table class="hours">
           <caption class="visually-hidden">Opening hours</caption>
-          <tr>
-            <th scope="row">Monday</th>
+          <tr data-hours-day="Monday">
+            <th scope="row">Monday <span class="today-marker">Today</span></th>
             <td>11:00 AM to 8:00 PM</td>
           </tr>
-          <tr>
-            <th scope="row">Tuesday</th>
+          <tr data-hours-day="Tuesday">
+            <th scope="row">Tuesday <span class="today-marker">Today</span></th>
             <td>11:00 AM to 8:00 PM</td>
           </tr>
-          <tr>
-            <th scope="row">Wednesday</th>
+          <tr data-hours-day="Wednesday">
+            <th scope="row">Wednesday <span class="today-marker">Today</span></th>
             <td>11:00 AM to 8:00 PM</td>
           </tr>
-          <tr>
-            <th scope="row">Thursday</th>
+          <tr data-hours-day="Thursday">
+            <th scope="row">Thursday <span class="today-marker">Today</span></th>
             <td>11:00 AM to 8:00 PM</td>
           </tr>
-          <tr>
-            <th scope="row">Friday</th>
+          <tr data-hours-day="Friday">
+            <th scope="row">Friday <span class="today-marker">Today</span></th>
             <td>11:00 AM to 8:00 PM</td>
           </tr>
-          <tr>
-            <th scope="row">Saturday</th>
+          <tr data-hours-day="Saturday">
+            <th scope="row">Saturday <span class="today-marker">Today</span></th>
             <td>11:00 AM to 8:00 PM</td>
           </tr>
-          <tr>
-            <th scope="row">Sunday</th>
+          <tr data-hours-day="Sunday">
+            <th scope="row">Sunday <span class="today-marker">Today</span></th>
             <td>Closed</td>
           </tr>
         </table>
-        <a class="btn btn-ghost" target="_blank" rel="noopener"
-          href="https://www.google.com/maps/search/?api=1&query=Golden+Country+Homes+Alanginan">Open in Google Maps</a>
+        <a class="btn btn-primary directions-link" target="_blank" rel="noopener noreferrer"
+          href="https://www.google.com/maps/search/?api=1&query=Dice+Tower+Board+Game+Cafe">Get directions <span aria-hidden="true">↗</span></a>
       </div>
-      <div class="map-frame">
+      <div class="map-card">
+        <div class="map-card-heading"><span>Local map</span><span class="map-card-location"><i aria-hidden="true"></i> Alanginan</span></div>
+        <div class="map-frame">
         <iframe title="Map showing Golden Country Homes, Alanginan" loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4873.875512984858!2d121.07132687600064!3d13.785962386609494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd0fa6397ee605%3A0xbcc55e338edc14ad!2sDice%20Tower%20Board%20Game%20Cafe!5e1!3m2!1sen!2sph!4v1792297805161!5m2!1sen!2sph"></iframe>
+        </div>
+        <div class="map-card-footer"><span>Golden Country Homes · Alanginan</span><span class="map-compass" aria-hidden="true">N</span></div>
+      </div>
       </div>
     </section>
 
@@ -340,7 +358,7 @@
   </footer>
 
   <script src="js/config.js?v=3"></script>
-  <script src="js/script.js?v=6"></script>
+  <script src="js/script.js?v=7"></script>
   <script src="js/dice.js?v=7"></script>
 </body>
 

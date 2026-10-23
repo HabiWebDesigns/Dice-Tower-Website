@@ -275,6 +275,16 @@ function updateOpenStatus() {
   badge.classList.toggle("is-open", open);
 }
 
+function initTodayHours() {
+  const weekday = new Intl.DateTimeFormat("en-US", {
+    weekday: "long",
+    timeZone: "Asia/Manila"
+  }).format(new Date());
+  document.querySelectorAll("[data-hours-day]").forEach(row => {
+    row.classList.toggle("is-today", row.dataset.hoursDay === weekday);
+  });
+}
+
 /* ---------- Mobile nav ---------- */
 function initNav() {
   const toggle = document.querySelector(".nav-toggle");
@@ -448,6 +458,7 @@ function initForm() {
 /* ---------- Start ---------- */
 initNav();
 updateOpenStatus();
+initTodayHours();
 initMenu();
 initEvents();
 initForm();

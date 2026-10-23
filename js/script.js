@@ -236,11 +236,43 @@ async function initEvents() {
 /* ---------- Open / closed badge ---------- */
 function updateOpenStatus() {
   const badge = document.getElementById("openStatus");
-  const hour = parseInt(new Intl.DateTimeFormat("en-GB", { hour: "2-digit", hour12: false, timeZone: "Asia/Manila" }).format(new Date()), 10);
-  const day = new Intl.DateTimeFormat("en-US", { weekday: "long", timeZone: "Asia/Manila" }).format(new Date());
+  const localParts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Manila",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    weekday: "long",
+    hour: "numeric",
+    hourCycle: "h23"
+  }).formatToParts(new Date()).reduce((parts, part) => {
+    if (part.type !== "literal") parts[part.type] = part.value;
+    return parts;
+  }, {});
+  const hour = Number(localParts.hour);
+  const day = localParts.weekday;
   const open = SITE_CONFIG.OPEN_DAYS.includes(day) && hour >= SITE_CONFIG.OPEN_HOUR && hour < SITE_CONFIG.CLOSE_HOUR;
-  badge.textContent = open ? "Open now, until 8:00 PM" : "Closed now. Open Monday to Saturday 11:00 AM to 8:00 PM";
+  const formatTime = value => `${value % 12 || 12}:00 ${value < 12 ? "AM" : "PM"}`;
+
+  badge.querySelector(".status-label").textContent = open ? "Open now" : "Closed now";
+  if (open) {
+    badge.querySelector(".status-hours").textContent = `Until ${formatTime(SITE_CONFIG.CLOSE_HOUR)}`;
+  } else {
+    const today = new Date(Date.UTC(Number(localParts.year), Number(localParts.month) - 1, Number(localParts.day)));
+    let nextOpening = "Check back soon";
+    for (let daysAhead = 0; daysAhead <= 7; daysAhead += 1) {
+      if (daysAhead === 0 && hour >= SITE_CONFIG.OPEN_HOUR) continue;
+      const candidate = new Date(today);
+      candidate.setUTCDate(candidate.getUTCDate() + daysAhead);
+      const weekday = new Intl.DateTimeFormat("en-US", { weekday: "long", timeZone: "UTC" }).format(candidate);
+      if (!SITE_CONFIG.OPEN_DAYS.includes(weekday)) continue;
+      const when = daysAhead === 0 ? "today" : daysAhead === 1 ? "tomorrow" : weekday;
+      nextOpening = `Opens ${when} at ${formatTime(SITE_CONFIG.OPEN_HOUR)}`;
+      break;
+    }
+    badge.querySelector(".status-hours").textContent = nextOpening;
+  }
   badge.classList.toggle("closed", !open);
+  badge.classList.toggle("is-open", open);
 }
 
 /* ---------- Mobile nav ---------- */
@@ -273,6 +305,59 @@ function initMotion() {
     target.classList.add("reveal");
     observer.observe(target);
   });
+}
+
+/* ---------- Featured TCG gallery ---------- */
+function initTcgGallery() {
+  const carousel = document.getElementById("tcgCarousel");
+  if (!carousel) return;
+  const slides = [...carousel.querySelectorAll("[data-tcg-slide]")];
+  const tabs = [...carousel.querySelectorAll("[data-tcg-tab]")];
+  const intervalMs = 6000;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let activeIndex = 0;
+  let timer = null;
+
+  const stopAutoplay = () => {
+    window.clearInterval(timer);
+    timer = null;
+  };
+  const startAutoplay = () => {
+    stopAutoplay();
+    if (reducedMotion.matches || document.hidden) return;
+    timer = window.setInterval(() => showSlide(activeIndex + 1), intervalMs);
+  };
+  const showSlide = index => {
+    activeIndex = (index + slides.length) % slides.length;
+    slides.forEach((slide, i) => {
+      const active = i === activeIndex;
+      slide.classList.toggle("is-active", active);
+      slide.setAttribute("aria-hidden", String(!active));
+      slide.inert = !active;
+    });
+    tabs.forEach((tab, i) => {
+      const active = i === activeIndex;
+      tab.classList.toggle("is-active", active);
+      tab.setAttribute("aria-selected", String(active));
+      tab.tabIndex = active ? 0 : -1;
+    });
+    startAutoplay();
+  };
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => showSlide(i));
+    tab.addEventListener("keydown", event => {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      event.preventDefault();
+      const direction = event.key === "ArrowRight" ? 1 : -1;
+      const nextIndex = (i + direction + tabs.length) % tabs.length;
+      showSlide(nextIndex);
+      tabs[nextIndex].focus();
+    });
+  });
+  document.addEventListener("visibilitychange", startAutoplay);
+  reducedMotion.addEventListener("change", startAutoplay);
+  startAutoplay();
 }
 
 /* ---------- Reservation form ---------- */
@@ -367,3 +452,4 @@ initMenu();
 initEvents();
 initForm();
 initMotion();
+initTcgGallery();

@@ -14,6 +14,7 @@
     rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/dice.css?v=5">
+  <link rel="stylesheet" href="css/tcg-gallery.css?v=11">
 </head>
 
 <body>
@@ -93,9 +94,77 @@
         </div>
       </div>
       <div class="hero-art">
-        <img src="images/logo.png" width="847" height="1000"
+        <img src="images/logo.png?v=2" width="847" height="1000"
           alt="Dice Tower logo: a red dragon curled around a stone tower, serving a burger on a platter">
-        <p class="open-status" id="openStatus" aria-live="polite">Open Monday to Saturday, 11:00 AM to 8:00 PM</p>
+        <p class="open-status" id="openStatus" aria-live="polite">
+          <span class="status-copy">
+            <strong class="status-label">Cafe hours</strong>
+            <span class="status-hours">Opening time updates daily</span>
+          </span>
+        </p>
+      </div>
+    </section>
+
+    <!-- FEATURED TRADING CARD GAMES -->
+    <section class="tcg-gallery" aria-labelledby="tcgGalleryTitle">
+      <div class="tcg-gallery-inner">
+        <div class="tcg-gallery-heading">
+          <div>
+            <p class="tcg-eyebrow">At the Dice Tower</p>
+            <h2 id="tcgGalleryTitle">Featured card games</h2>
+          </div>
+        </div>
+        <div class="tcg-carousel" id="tcgCarousel" aria-roledescription="carousel" aria-label="Featured trading card games">
+          <div class="tcg-slides" aria-live="off">
+            <article class="tcg-slide is-active" id="tcgSlide0" data-tcg-slide="0" role="tabpanel" aria-labelledby="tcgTab0" aria-hidden="false">
+              <img src="images/tcg/cookierun-braverse-hd.jpg" alt="Cookie Run Braverse TCG characters on a starry blue background" width="3080" height="1732" fetchpriority="high">
+              <div class="tcg-slide-copy">
+                <span class="tcg-slide-kicker">Cookie Run</span>
+                <h3>Braverse</h3>
+                <a class="tcg-shop-link" href="https://cookierunbraverse.com/asia/decks" target="_blank" rel="noopener noreferrer">Discover the game <span aria-hidden="true">&rarr;</span></a>
+              </div>
+            </article>
+            <article class="tcg-slide" id="tcgSlide1" data-tcg-slide="1" role="tabpanel" aria-labelledby="tcgTab1" aria-hidden="true" inert>
+              <img src="images/tcg/riftbound-origins.png" alt="Ahri, Yasuo, and Jinx in Riftbound League of Legends Trading Card Game key art" width="1500" height="844" loading="lazy">
+              <div class="tcg-slide-copy">
+                <span class="tcg-slide-kicker">League of Legends</span>
+                <h3>Riftbound</h3>
+                <a class="tcg-shop-link" href="https://playriftbound.com/en-us/" target="_blank" rel="noopener noreferrer" tabindex="-1">Discover the game <span aria-hidden="true">&rarr;</span></a>
+              </div>
+            </article>
+            <article class="tcg-slide" id="tcgSlide2" data-tcg-slide="2" role="tabpanel" aria-labelledby="tcgTab2" aria-hidden="true" inert>
+              <img src="images/tcg/magic-reality-fracture.jpg" alt="A magical battle from Magic: The Gathering Reality Fracture" width="1920" height="1080" loading="lazy">
+              <div class="tcg-slide-copy">
+                <span class="tcg-slide-kicker">Magic: The Gathering</span>
+                <h3>Reality Fracture</h3>
+                <a class="tcg-shop-link" href="https://magic.wizards.com/" target="_blank" rel="noopener noreferrer" tabindex="-1">Discover the game <span aria-hidden="true">&rarr;</span></a>
+              </div>
+            </article>
+            <article class="tcg-slide" id="tcgSlide3" data-tcg-slide="3" role="tabpanel" aria-labelledby="tcgTab3" aria-hidden="true" inert>
+              <img src="images/tcg/pokemon-30th-celebration.webp" alt="Pikachu, Mew, and Mewtwo above the Pokémon TCG 30th Celebration emblem" width="2880" height="1944" loading="lazy">
+              <div class="tcg-slide-copy">
+                <span class="tcg-slide-kicker">Pokémon TCG</span>
+                <h3>30th Celebration</h3>
+                <a class="tcg-shop-link" href="https://www.30th.pokemon-card.com/product/m6a" target="_blank" rel="noopener noreferrer" tabindex="-1">Explore the celebration <span aria-hidden="true">&rarr;</span></a>
+              </div>
+            </article>
+            <article class="tcg-slide" id="tcgSlide4" data-tcg-slide="4" role="tabpanel" aria-labelledby="tcgTab4" aria-hidden="true" inert>
+              <img src="images/tcg/vg.jpg" alt="Cardfight!! Vanguard Divinez key art featuring its cardfighters" width="1280" height="720" loading="lazy">
+              <div class="tcg-slide-copy">
+                <span class="tcg-slide-kicker">Cardfight!!</span>
+                <h3>Vanguard</h3>
+                <a class="tcg-shop-link" href="https://en.cf-vanguard.com/" target="_blank" rel="noopener noreferrer" tabindex="-1">Discover the game <span aria-hidden="true">&rarr;</span></a>
+              </div>
+            </article>
+          </div>
+          <div class="tcg-tabs" role="tablist" aria-label="Choose a featured game">
+            <button class="tcg-tab is-active" type="button" role="tab" id="tcgTab0" aria-selected="true" aria-controls="tcgSlide0" data-tcg-tab="0"><span class="tcg-tab-game">Cookie Run</span><strong>Braverse</strong></button>
+            <button class="tcg-tab" type="button" role="tab" id="tcgTab1" aria-selected="false" aria-controls="tcgSlide1" data-tcg-tab="1" tabindex="-1"><span class="tcg-tab-game">Riftbound</span><strong>League of Legends</strong></button>
+            <button class="tcg-tab" type="button" role="tab" id="tcgTab2" aria-selected="false" aria-controls="tcgSlide2" data-tcg-tab="2" tabindex="-1"><span class="tcg-tab-game">Magic</span><strong>Reality Fracture</strong></button>
+            <button class="tcg-tab" type="button" role="tab" id="tcgTab3" aria-selected="false" aria-controls="tcgSlide3" data-tcg-tab="3" tabindex="-1"><span class="tcg-tab-game">Pokémon</span><strong>30th Celebration</strong></button>
+            <button class="tcg-tab" type="button" role="tab" id="tcgTab4" aria-selected="false" aria-controls="tcgSlide4" data-tcg-tab="4" tabindex="-1"><span class="tcg-tab-game">Cardfight!!</span><strong>Vanguard</strong></button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -271,8 +340,10 @@
   </footer>
 
   <script src="js/config.js?v=3"></script>
-  <script src="js/script.js?v=3"></script>
+  <script src="js/script.js?v=6"></script>
   <script src="js/dice.js?v=7"></script>
 </body>
 
 </html>
+
+

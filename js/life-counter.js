@@ -13,18 +13,9 @@
       { type: "image", src: "https://media1.tenor.com/m/GOvZ08i0iicAAAAd/coffin-dance-coffin.gif" },
       { type: "image", src: "https://media.tenor.com/dPAQRrb9YcoAAAAj/dead-skeleton.gif" },
       { type: "image", src: "https://media1.tenor.com/m/yjXyDojiCAsAAAAd/jujutsu-jjk.gif" },
-      { type: "embed", src: "https://tenor.com/embed/21591995" },
+      { type: "image", src: "https://media1.tenor.com/m/HX25l102LKYAAAAd/wag-ka-nang-magpaliwanag-raffy-tulfo-in-action.gif" },
       { type: "embed", src: "https://tenor.com/embed/10262734429934951892" },
       { type: "embed", src: "https://tenor.com/embed/2539277877407045235" }
-    ],
-    commander: [
-      { type: "image", src: "https://media1.tenor.com/m/0q87cz7-6wYAAAAd/fatality-mortal-kombat.gif" },
-      { type: "embed", src: "https://tenor.com/embed/8170053925835606806" },
-      { type: "embed", src: "https://tenor.com/embed/14561064389149752222" }
-    ],
-    poison: [
-      { type: "embed", src: "https://tenor.com/embed/3566796335076748147" },
-      { type: "image", src: "https://media1.tenor.com/m/qSk8cXwntt0AAAAd/toxic-britney-spears.gif" }
     ]
   };
   const announcementMedia = {
@@ -42,9 +33,6 @@
   let pressTimer;
   let longPress = false;
   let activePlayer = 0;
-  const effectQueues = new Map();
-  const runningEffects = new Set();
-  let gameGeneration = 0;
   const announcementQueue = [];
   let announcementPlaying = false;
 
@@ -53,19 +41,26 @@
     announcementPlaying = true;
     const announcement = announcementQueue.shift();
     const mediaPool = announcementMedia[announcement.type];
-    const media = Array.isArray(mediaPool)
+    const media = announcement.media || (Array.isArray(mediaPool)
       ? mediaPool[Math.floor(Math.random() * mediaPool.length)]
-      : mediaPool;
+      : mediaPool);
     const layer = document.createElement("section");
     layer.className = "game-announcement";
     layer.setAttribute("role", "status");
     const panel = document.createElement("div");
     panel.className = "game-announcement-panel";
-    const image = document.createElement("img");
+    const mediaIsEmbed = media.type === "embed" || media.src.startsWith("https://tenor.com/embed/");
+    const image = document.createElement(mediaIsEmbed ? "iframe" : "img");
     image.className = "game-announcement-media";
     image.src = media.src;
-    image.alt = "";
+    if (mediaIsEmbed) {
+      image.title = "Elimination animation";
+      image.setAttribute("allow", "autoplay; fullscreen; picture-in-picture");
+    } else {
+      image.alt = "";
+    }
     image.onerror = () => {
+      if (!media.embed) return;
       const embed = document.createElement("iframe");
       embed.className = "game-announcement-media";
       embed.src = media.embed;
@@ -75,13 +70,19 @@
     };
     const title = document.createElement("p");
     title.className = "game-announcement-title";
-    title.textContent = announcement.type === "winner" ? `${announcement.name} wins!` : "First Blood";
+    title.textContent = announcement.type === "winner"
+      ? `${announcement.name} wins!`
+      : announcement.type === "elimination"
+        ? `${announcement.name} dies by ${announcement.cause}`
+        : "First Blood";
     const actions = document.createElement("div");
     actions.className = "game-announcement-actions";
     const closeButton = document.createElement("button");
     closeButton.type = "button";
     closeButton.className = "game-announcement-close";
-    closeButton.textContent = announcement.type === "winner" ? "Close" : "Quick Exit";
+    closeButton.textContent = announcement.type === "firstDamage"
+      ? "Quick Exit"
+      : announcement.type === "winner" ? "Close" : "Exit";
     let closeTimer;
     const closeAnnouncement = () => {
       window.clearTimeout(closeTimer);
@@ -94,7 +95,7 @@
     panel.append(image, title, actions);
     layer.appendChild(panel);
     (counterDialog.open ? counterDialog : document.body).appendChild(layer);
-    if (announcement.type !== "winner") {
+    if (announcement.type === "firstDamage") {
       closeTimer = window.setTimeout(closeAnnouncement, 10000);
     }
   }
@@ -110,86 +111,16 @@
     announceGameEvent({ type: "firstDamage" });
   }
 
-  function playNextEffect(index) {
-    const queue = effectQueues.get(index);
-    if (!queue?.length) {
-      effectQueues.delete(index);
-      runningEffects.delete(index);
-      return;
-    }
-    if (counterDialog.open) {
-      runningEffects.add(index);
-      window.setTimeout(() => playNextEffect(index), 250);
-      return;
-    }
-    runningEffects.add(index);
-    const card = grid.children[index];
-    const effect = queue.shift();
-    if (!card) {
-      window.setTimeout(() => playNextEffect(index), 100);
-      return;
-    }
-
-    const generation = gameGeneration;
-    const overlay = createPlayerEffect(effect);
-    card.appendChild(overlay);
-    window.setTimeout(() => {
-      overlay.remove();
-      if (generation !== gameGeneration) return;
-      playNextEffect(index);
-    }, 10000);
-  }
-
-  function createPlayerEffect(effect) {
-    const overlay = document.createElement("div");
-    overlay.className = "player-effect";
-    overlay.setAttribute("aria-hidden", "true");
-    const content = document.createElement(effect.type === "embed" ? "iframe" : "img");
-    content.className = "player-effect-media";
-    if (effect.type === "embed") {
-      content.src = effect.src;
-      content.title = "Player event animation";
-      content.setAttribute("allow", "autoplay; fullscreen; picture-in-picture");
-      content.setAttribute("loading", "eager");
-      content.setAttribute("frameborder", "0");
-    } else {
-      content.src = effect.src;
-      content.alt = "";
-    }
-    overlay.appendChild(content);
-    return overlay;
-  }
-
-  function choosePlayerEffect(category) {
-    const pool = effectMedia[category];
-    return pool[Math.floor(Math.random() * pool.length)];
-  }
-
   function chooseEliminationEffect(category) {
-    const allEffects = [...effectMedia.death, ...effectMedia.commander];
     const preferredEffects = effectMedia[category];
     let available = preferredEffects.filter(effect => !usedEliminationEffects.has(effect.src));
-    if (!available.length) available = allEffects.filter(effect => !usedEliminationEffects.has(effect.src));
     if (!available.length) return null;
     const choice = available[Math.floor(Math.random() * available.length)];
     usedEliminationEffects.add(choice.src);
     return choice;
   }
 
-  function queuePlayerEffect(index, category) {
-    const pool = effectMedia[category];
-    if (!pool?.length) return;
-    const choice = choosePlayerEffect(category);
-    const queue = effectQueues.get(index) || [];
-    queue.push(choice);
-    effectQueues.set(index, queue);
-    if (!runningEffects.has(index)) playNextEffect(index);
-  }
-
   function freshGame(count, life) {
-    gameGeneration += 1;
-    effectQueues.clear();
-    runningEffects.clear();
     usedEliminationEffects.clear();
     startingLife = life;
     firstDamagePlayed = false;
@@ -279,18 +210,36 @@
       commander.setAttribute("aria-label", `Commander damage for ${player.name}`);
       tools.append(poison, commander);
       card.append(heading, lifeDisplay, tools); grid.appendChild(card);
-      let persistentEffect = player.eliminationGif
-        ? [...effectMedia.death, ...effectMedia.commander].find(effect => effect.src === player.eliminationGif)
+      let eliminationEffect = player.eliminationGif
+        ? effectMedia.death.find(effect => effect.src === player.eliminationGif)
         : null;
-      if (defeated && !persistentEffect && !player.eliminationGif) {
-        const category = defeated === "21 commander" ? "commander" : "death";
-        persistentEffect = chooseEliminationEffect(category);
-        if (persistentEffect) {
-          player.eliminationGif = persistentEffect.src;
-          save();
+      if (defeated !== "Defeated") {
+        delete player.eliminationGif;
+        delete player.eliminationPromptShown;
+        delete player.eliminationCause;
+        eliminationEffect = null;
+      } else if (player.eliminationGif && !eliminationEffect) {
+        delete player.eliminationGif;
+      }
+      if (defeated === "Defeated" && !eliminationEffect) {
+        eliminationEffect = chooseEliminationEffect("death");
+        if (eliminationEffect) {
+          player.eliminationGif = eliminationEffect.src;
         }
       }
-      if (persistentEffect) card.appendChild(createPlayerEffect(persistentEffect));
+      if (defeated === "Defeated" && eliminationEffect && !player.eliminationPromptShown) {
+        player.eliminationPromptShown = true;
+        player.eliminationCause = player.eliminationCause || (
+          "Lethal"
+        );
+        save();
+        announceGameEvent({
+          type: "elimination",
+          name: player.name,
+          cause: player.eliminationCause,
+          media: eliminationEffect
+        });
+      }
     });
     document.getElementById("gameSummary").textContent = `${players.length} players · ${startingLife} starting life`;
     checkForWinner();
@@ -378,7 +327,6 @@
   counterDetails.addEventListener("click", event => {
     const button = event.target.closest("button[data-action]"); if (!button || button.disabled) return;
     const player = players[Number(button.dataset.player)]; const amount = Number(button.dataset.amount);
-    let poisonAdded = false;
     let commanderDamageAdded = false;
     if (button.dataset.action === "counter") {
       if (button.dataset.key.startsWith("commanderDamage:")) {
@@ -386,13 +334,11 @@
         commanderDamageAdded = amount > 0 && !defeatedReason(player);
         player.commanderDamage[sourceIndex] = Math.max(0, player.commanderDamage[sourceIndex] + amount);
       } else {
-        poisonAdded = button.dataset.key === "poison" && amount > 0;
         player[button.dataset.key] = Math.max(0, player[button.dataset.key] + amount);
       }
     }
     if (commanderDamageAdded) recordFirstDamage();
     save(); render(); openCounters(activePlayer);
-    if (poisonAdded) queuePlayerEffect(Number(button.dataset.player), "poison");
   });
   document.getElementById("settingsButton").addEventListener("click", () => settings.showModal());
   document.getElementById("closeSettings").addEventListener("click", () => settings.close());

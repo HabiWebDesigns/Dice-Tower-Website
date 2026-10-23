@@ -31,29 +31,6 @@
 .player-card { --player: #d8bd78; position: relative; isolation: isolate; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; min-height: 0; overflow: hidden; padding: clamp(.7rem, 1.7vw, 1.25rem); border: 1px solid color-mix(in srgb, var(--player), transparent 55%); border-radius: 20px; background: linear-gradient(145deg, color-mix(in srgb, var(--player), #252a26 90%), #202521 52%, #1c211e); box-shadow: 0 12px 32px #080a08aa, inset 0 1px 0 #ffffff0b; }
 .player-card::before { position: absolute; z-index: -1; inset: 0 0 auto; height: 3px; background: var(--player); content: ""; box-shadow: 0 0 20px color-mix(in srgb, var(--player), transparent 45%); }
 .player-card.is-defeated { filter: saturate(.35); opacity: .58; }
-.player-effect {
-  position: absolute;
-  z-index: 5;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  padding: clamp(.45rem, 2vw, 1rem);
-  background: rgb(20 10 7 / 62%);
-  pointer-events: none;
-  animation: player-effect-in .2s ease-out both;
-}
-.player-effect-media {
-  display: block;
-  width: min(88%, 340px);
-  height: min(78%, 230px);
-  border: 2px ridge #d8ad69;
-  border-radius: 8px;
-  background: #1b120e;
-  object-fit: contain;
-  box-shadow: 0 10px 30px #000c, 0 0 20px rgb(231 184 107 / 22%);
-}
-iframe.player-effect-media { aspect-ratio: 4 / 3; }
 .game-announcement {
   position: fixed;
   z-index: 2147483000;
@@ -63,7 +40,7 @@ iframe.player-effect-media { aspect-ratio: 4 / 3; }
   padding: 1rem;
   background: rgb(18 10 7 / 76%);
   pointer-events: none;
-  animation: player-effect-in .2s ease-out both;
+  animation: game-announcement-in .2s ease-out both;
 }
 .game-announcement-panel {
   display: grid;
@@ -79,12 +56,17 @@ iframe.player-effect-media { aspect-ratio: 4 / 3; }
 .game-announcement-media {
   display: block;
   width: 100%;
+  height: auto;
   max-height: min(58vh, 520px);
   border: 1px solid rgb(235 200 147 / 55%);
   border-radius: 6px;
   background: #170f0b;
   object-fit: contain;
   box-shadow: 0 8px 28px #0009;
+}
+iframe.game-announcement-media {
+  height: auto;
+  aspect-ratio: 4 / 3;
 }
 .game-announcement-title {
   margin: 0;
@@ -107,7 +89,7 @@ iframe.player-effect-media { aspect-ratio: 4 / 3; }
   box-shadow: inset 0 1px rgb(255 255 255 / 14%), 0 3px 0 #44170f;
 }
 .game-announcement-close:hover { background: linear-gradient(180deg, #c34c2b, #8a2d1e); }
-@keyframes player-effect-in {
+@keyframes game-announcement-in {
   from { opacity: 0; transform: scale(.96); }
   to { opacity: 1; transform: scale(1); }
 }
@@ -324,6 +306,9 @@ iframe.player-effect-media { aspect-ratio: 4 / 3; }
 @media (max-width: 650px) {
   .counter-table { margin-block: .3rem; padding: .55rem; border-radius: 8px; }
   .player-tools { gap: .3rem; }
+  .game-announcement { padding: .55rem; }
+  .game-announcement-panel { width: 100%; gap: .55rem; padding: .65rem; }
+  .game-announcement-media { max-height: 48svh; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -331,5 +316,4 @@ iframe.player-effect-media { aspect-ratio: 4 / 3; }
   .dialog-close,
   .life-button,
   .counter-tool { transition: none; }
-  .player-effect { animation: none; }
 }

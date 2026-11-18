@@ -5,7 +5,7 @@
 /* ---------- Settings (extra ones are optional in config.js) ---------- */
 const ORDER = {
   email: SITE_CONFIG.ORDER_EMAIL || SITE_CONFIG.RESERVATION_EMAIL,
-  imageFolder: SITE_CONFIG.ORDER_IMAGE_FOLDER || "images/menu/",
+  imageFolder: SITE_CONFIG.ORDER_IMAGE_FOLDER || "images/food/",
   photoByName: SITE_CONFIG.ORDER_PHOTO_BY_NAME !== false,
   payNote: SITE_CONFIG.ORDER_PAYMENT_NOTE || "",
   openLabel: ((SITE_CONFIG.OPEN_HOUR + 11) % 12 + 1) + ":00 " + (SITE_CONFIG.OPEN_HOUR < 12 ? "AM" : "PM"),
@@ -13,6 +13,18 @@ const ORDER = {
   lastTime: String(SITE_CONFIG.CLOSE_HOUR - 1).padStart(2, "0") + ":30",
   proofMaxBytes: (SITE_CONFIG.ORDER_PROOF_MAX_MB || 5) * 1024 * 1024
 };
+
+/* Food photos are named after their menu items and stored in images/food/. */
+const FOOD_PHOTO_FILES = [
+  "Biscoff Iced Latte.png", "Califronia Street Hotdog Sandwich.png", "Caramel Latte.png",
+  "Cheese Sticks.png", "Chicken Loaded Cheese Fries.png", "Classic Frappes.png",
+  "Classic Iced Coffee.png", "Creamy Strawberry Milk.png", "Dragon Slayers Rice Bowl Meal.png",
+  "DT Signature Pork Tapa Rice Bowl.png", "Fish and Chips.png", "French Fries.png",
+  "Iced Chocolate.png", "Iced Matcha Latte.png", "Mana Fizz.png", "Matcha Biscoff.png",
+  "Matcha Strawberry.png", "Milk Tea Cheesecake Series.png", "Onion Rings.png",
+  "Potato Wedges.png", "Salted Caramel Latte.png", "Seasalt Latte.png",
+  "Sou_s Hot Chocolate.png", "Spanish Latte.png", "Specialty Frappes.png"
+];
 
 /* Same sample menu as the main site, used if the sheet cannot be loaded. */
 const SAMPLE_MENU = `Category,Name,Price,Description,Available
@@ -105,6 +117,14 @@ function money(n) {
 function slug(name) {
   return name.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
+function photoKey(name) {
+  return String(name || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+const FOOD_PHOTOS_BY_NAME = new Map(FOOD_PHOTO_FILES.map(file => [photoKey(file.replace(/\.[^.]+$/, "")), file]));
+/* These source filenames contain legacy spelling/punctuation that differs from the menu. */
+FOOD_PHOTOS_BY_NAME.set(photoKey("California Street Hotdog Sandwich"), "Califronia Street Hotdog Sandwich.png");
+FOOD_PHOTOS_BY_NAME.set(photoKey("Dragon Slayer's Rice Bowl Meal"), "Dragon Slayers Rice Bowl Meal.png");
+FOOD_PHOTOS_BY_NAME.set(photoKey("Sou's Hot Chocolate"), "Sou_s Hot Chocolate.png");
 function resolveImage(value) {
   const drive = value.match(/drive\.google\.com\/file\/d\/([^/]+)/) ||
                 value.match(/drive\.google\.com\/(?:open|uc)\?(?:.*&)?id=([^&]+)/);
@@ -113,9 +133,27 @@ function resolveImage(value) {
   return ORDER.imageFolder + value.replace(/^\/+/, "");                                 // file name in the images folder
 }
 function photoCandidates(item) {
+  const menuLabel = (item.category || "") + " " + (item.name || "");
+  if (/milk\s*tea/i.test(item.category || "")) {
+    return ["images/food/" + encodeURIComponent("Milk Tea Cheesecake Series.png")];
+  }
+  if (/mana\s*fizz(?:\s*series)?/i.test(menuLabel)) {
+    return ["images/food/" + encodeURIComponent("Mana Fizz.png")];
+  }
+  if (/classic\s*frappes?/i.test(menuLabel)) {
+    return ["images/food/" + encodeURIComponent("Classic Frappes.png")];
+  }
+  if (/(?:premium\s*\/\s*)?specialty\s*frappes?/i.test(menuLabel)) {
+    return ["images/food/" + encodeURIComponent("Specialty Frappes.png")];
+  }
+  if (/dragon\s*slayer'?s\s*rice\s*bowl\s*meal/i.test(item.name || "")) {
+    return ["images/food/" + encodeURIComponent("Dragon Slayers Rice Bowl Meal.png")];
+  }
   const given = item.image || item.photo;
   if (given) return [resolveImage(given)];
   if (!ORDER.photoByName) return [];
+  const foodPhoto = FOOD_PHOTOS_BY_NAME.get(photoKey(item.name));
+  if (foodPhoto) return ["images/food/" + encodeURIComponent(foodPhoto)];
   const base = ORDER.imageFolder + slug(item.name);
   return [base + ".jpg", base + ".png", base + ".webp"];
 }

@@ -19,10 +19,10 @@ const SITE_CONFIG = {
   ORDER_EMAIL: "",
 
   // Food photos: put image files in this folder (the menu sheet can also have an "Image" column).
-  ORDER_IMAGE_FOLDER: "images/menu/",
+  ORDER_IMAGE_FOLDER: "images/food/",
 
-  // true = if an item has no Image in the sheet, look for images/menu/<item-name>.jpg (or .png / .webp),
-  // for example images/menu/spanish-latte.jpg
+  // true = if an item has no Image in the sheet, look for images/food/<item-name>.jpg (or .png / .webp),
+  // for example images/food/spanish-latte.jpg
   ORDER_PHOTO_BY_NAME: true,
 
   // Payment: customers scan images/instapay-qr.png (replace that file to change the QR) and must upload
